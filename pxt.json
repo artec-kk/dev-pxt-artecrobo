@@ -5,11 +5,12 @@
     "license": "MIT",
     "icon": "icon.png",
     "files": [
-        "artecrobo.ts"
-        ,"_locales/ja/ArtecRobo-jsdoc-strings.json"
-        ,"_locales/ja/ArtecRobo-strings.json"
-        ,"_locales/zh-CN/ArtecRobo-jsdoc-strings.json"
-        ,"_locales/zh-CN/ArtecRobo-strings.json"
+        "README.md",
+        "artecrobo.ts",
+        "_locales/ja/ArtecRobo-jsdoc-strings.json",
+        "_locales/ja/ArtecRobo-strings.json",
+        "_locales/zh-CN/ArtecRobo-jsdoc-strings.json",
+        "_locales/zh-CN/ArtecRobo-strings.json"
     ],
     "testFiles": [
         "test-artecrobo.ts"

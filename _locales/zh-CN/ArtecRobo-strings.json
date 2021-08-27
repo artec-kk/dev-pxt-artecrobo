@@ -12,5 +12,5 @@
   ,"artecrobo.setSpeedDCMotor|block": "直流馬達 |%_connector|輸出功率|%_speed"
   ,"artecrobo.moveServoMotorMax|block": "設定伺服馬達 %_connector| 到 %_angle| 度"
   ,"artecrobo.moveServoMotor|block": "設定伺服馬達 %_connector| 到 %_angle| 度 速度： %_speed"
-  ,"artecrobo.AsyncMoveServoMotor|block": "同時 轉動伺服馬達|速度:%_speed|P13到:%_angle13度|P14到:%_angle14度|P15到:%_angle15度"
+  ,"artecrobo.AsyncMoveServoMotor|block": "同時轉動伺服馬達同時轉動伺服馬達|速度:%_speed|P13到:%_angle13度|P14到:%_angle14度|P15到:%_angle15度"
 }

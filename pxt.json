@@ -9,8 +9,8 @@
         "artecrobo.ts",
         "_locales/ja/ArtecRobo-jsdoc-strings.json",
         "_locales/ja/ArtecRobo-strings.json",
-        "_locales/zh-CN/ArtecRobo-jsdoc-strings.json",
-        "_locales/zh-CN/ArtecRobo-strings.json"
+        "_locales/zh-TW/ArtecRobo-jsdoc-strings.json",
+        "_locales/zh-TW/ArtecRobo-strings.json"
     ],
     "testFiles": [
         "test-artecrobo.ts"

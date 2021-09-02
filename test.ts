@@ -12,19 +12,19 @@ for (let i = 1023; i > 0; i--) {
     basic.pause(10);
 }
 
-// CCW & BRAKE
+// CW & BRAKE
 // M1, M2
 artecrobo.setSpeedDCMotor(connectorDCMotor.M1, 1023);
-artecrobo.moveDCMotor(connectorDCMotor.M1, DCmotion.Backward);
+artecrobo.moveDCMotor(connectorDCMotor.M1, DCmotion.Forward);
 basic.pause(2000);
 artecrobo.moveDCMotor(connectorDCMotor.M1, DCmotion.Brake);
 
 artecrobo.setSpeedDCMotor(connectorDCMotor.M2, 1023);
-artecrobo.moveDCMotor(connectorDCMotor.M2, DCmotion.Backward);
+artecrobo.moveDCMotor(connectorDCMotor.M2, DCmotion.Forward);
 basic.pause(2000);
 artecrobo.moveDCMotor(connectorDCMotor.M2, DCmotion.Brake);
 
-// COAST
+// CCW & COAST
 // M1, M2
 artecrobo.setSpeedDCMotor(connectorDCMotor.M1, 1023);
 artecrobo.moveDCMotor(connectorDCMotor.M1, DCmotion.Backward);

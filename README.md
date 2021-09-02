@@ -1,7 +1,7 @@
  
 # ArtecRobo
 
-[Extension for ArtecRobo](https://www.artec-kk.co.jp/artecrobo/ja/)
+[Extension for ArtecRobo](https://www.artec-kk.co.jp/en/images/056720.pdf#page=36)
 
 ## Basic usage
 

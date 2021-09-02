@@ -13,7 +13,7 @@
         "_locales/zh-TW/ArtecRobo-strings.json"
     ],
     "testFiles": [
-        "test-artecrobo.ts"
+        "test.ts"
     ],
     "dependencies": {
         "core": "*"

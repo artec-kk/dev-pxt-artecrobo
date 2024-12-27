@@ -29,7 +29,9 @@ enum connectorServoMotor {
 }
 
 enum connectorSensor{
+	//% block="P1"
 	P1 = AnalogPin.P1,
+	//% block="P2"
 	P2 = AnalogPin.P2
 }
 
@@ -114,6 +116,19 @@ namespace artecrobo {
 	export function lightSensor(_connector: connectorSensor): number {
 		return pins.analogReadPin(_connector);
 	}
+
+	//% blockId=artec_sound_sensor
+	//% block="sound sensor pin %_connector"
+	export function soundSensor(_connector: connectorSensor): number {
+		return pins.analogReadPin(_connector);
+	}
+
+	//% blockId=artec_photo_reflector
+	//% block="sound sensor pin %_connector"
+	export function photoReflector(_connector: connectorSensor): number {
+		return pins.analogReadPin(_connector);
+	}
+	
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"

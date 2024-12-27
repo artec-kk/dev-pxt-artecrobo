@@ -14,4 +14,6 @@
   ,"artecrobo.moveServoMotor|block": "サーボモーター %_connector| を %_angle| 度にする 速さ： %_speed"
   ,"artecrobo.AsyncMoveServoMotor|block": "サーボモーターを同時に動かす| 速さ: %_speed| P13の角度: %_angle13| P14の角度: %_angle14| P15の角度: %_angle15"
   ,"artecrobo.lightSensor|block": "光センサー| 端子: %_connector"
+  ,"artecrobo.soundSensor|block": "音センサー| 端子: %_connector"
+  ,"artecrobo.photoReflector|block": "赤外線フォトリフレクタ| 端子: %_connector"
 }

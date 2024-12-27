@@ -28,6 +28,11 @@ enum connectorServoMotor {
 	P15 = AnalogPin.P15
 }
 
+enum connectorSensor{
+	P1 = AnalogPin.P1,
+	P2 = AnalogPin.P2
+}
+
 /**
  * ArtecRobo control package
  */
@@ -102,6 +107,12 @@ namespace artecrobo {
 				break;
 		}
 		state = _motion;
+	}
+
+	//% blockId=artec_light_sensor
+	//% block="light sensor pin %_connector"
+	export function lightSensor(_connector: connectorSensor): number {
+		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_set_speed_dc_motor

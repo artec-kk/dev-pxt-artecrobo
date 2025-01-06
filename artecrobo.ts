@@ -159,7 +159,6 @@ namespace artecrobo {
     //% blockId=artec_make_sound
 	//% block="makeSound pin %_connector Hz %_note"
     //% _note.shadow="device_note"
-    //% _note.defl=Note.C
 	export function makeSound(_connector: connectorSound,_note: number){
 		pins.setAudioPin(_connector);
 		music.ringTone(_note);

@@ -42,11 +42,11 @@ enum connectorOutput{
 
 enum connectorSound{
 	//% block="P0"
-	P0 = DigitalPin.P0,
+	P0 = AnalogPin.P0,
 	//% block="P1"
-	P1 = DigitalPin.P1,
+	P1 = AnalogPin.P1,
 	//% block="P2"
-	P2 = DigitalPin.P2
+	P2 = AnalogPin.P2
 }
 
 
@@ -160,7 +160,7 @@ namespace artecrobo {
 	//% block="makeSound pin %_connector Hz %_note"
     //% _note.shadow="device_note"
 	export function makeSound(_connector: connectorSound,_note: number){
-		pins.setAudioPin(_connector);
+		pins.analogSetPitchPin(_connector);
 		music.ringTone(_note);
 	}
 

@@ -35,6 +35,11 @@ enum connectorSensor{
 	P2 = AnalogPin.P2
 }
 
+enum connectorOutput{
+	//% block="P0"
+	P0 = AnalogPin.P0
+}
+
 /**
  * ArtecRobo control package
  */
@@ -127,6 +132,18 @@ namespace artecrobo {
 	//% block="sound sensor pin %_connector"
 	export function photoReflector(_connector: connectorSensor): number {
 		return pins.analogReadPin(_connector);
+	}
+
+	//% blockId=artec_LED_lighting
+	//% block="LED lighting pin %_connector"
+	export function ledLighting(_connector: connectorOutput){
+		pins.digitalWritePin(_connector, 1);
+	}
+
+	//% blockId=artec_LED_off
+	//% block="LED off pin %_connector"
+	export function ledOff(_connector: connectorOutput){
+		pins.digitalWritePin(_connector, 0);
 	}
 	
 

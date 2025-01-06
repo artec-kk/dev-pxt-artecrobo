@@ -16,4 +16,6 @@
   ,"artecrobo.lightSensor|block": "光センサー| 端子: %_connector"
   ,"artecrobo.soundSensor|block": "音センサー| 端子: %_connector"
   ,"artecrobo.photoReflector|block": "赤外線フォトリフレクタ| 端子: %_connector"
+  ,"artecrobo.ledLighting|block": "LED 光らせる| 端子: %_connector"
+  ,"artecrobo.ledOff|block": "LED 消す| 端子: %_connector"
 }

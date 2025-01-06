@@ -40,6 +40,16 @@ enum connectorOutput{
 	P0 = AnalogPin.P0
 }
 
+enum connectorSound{
+	//% block="P0"
+	P0 = DigitalPin.P0.
+	//% block="P1"
+	P1 = DigitalPin.P1,
+	//% block="P2"
+	P2 = DigitalPin.P2
+}
+
+
 /**
  * ArtecRobo control package
  */
@@ -145,7 +155,22 @@ namespace artecrobo {
 	export function ledOff(_connector: connectorOutput){
 		pins.digitalWritePin(_connector, 0);
 	}
-	
+
+    //% blockId=artec_make_sound
+	//% block="makeSound pin %_connector Hz %_note"
+    //% _note.shadow="device_note"
+    //% _note.defl=Note.C
+	export function makeSound(_connector: connectorSound,_note: number){
+		ProcessingInstruction.setAudioPin(_connector);
+		music.ringTone(_note);
+	}
+
+	//% blockId=artec_temperature_sensor
+	//% block="temperature sensor pin %_connector"
+	export function temperatureSensor(_connector: connectorSensor): number {
+		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10
+	}
+
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"

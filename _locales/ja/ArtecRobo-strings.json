@@ -18,4 +18,6 @@
   ,"artecrobo.photoReflector|block": "赤外線フォトリフレクタ| 端子: %_connector"
   ,"artecrobo.ledLighting|block": "LED 光らせる| 端子: %_connector"
   ,"artecrobo.ledOff|block": "LED 消す| 端子: %_connector"
+  ,"artecrobo.makeSound|block": "音楽を流す| 端子: %_connector| 音の高さ: %_note"
+  ,"artecrobo.temperatureSensor|block": "温度センサー| 端子: %_connector"
 }

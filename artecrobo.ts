@@ -161,7 +161,7 @@ namespace artecrobo {
     //% _note.shadow="device_note"
     //% _note.defl=Note.C
 	export function makeSound(_connector: connectorSound,_note: number){
-		ProcessingInstruction.setAudioPin(_connector);
+		pins.setAudioPin(_connector);
 		music.ringTone(_note);
 	}
 

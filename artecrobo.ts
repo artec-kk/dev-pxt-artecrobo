@@ -42,7 +42,7 @@ enum connectorOutput{
 
 enum connectorSound{
 	//% block="P0"
-	P0 = DigitalPin.P0.
+	P0 = DigitalPin.P0,
 	//% block="P1"
 	P1 = DigitalPin.P1,
 	//% block="P2"

@@ -170,6 +170,12 @@ namespace artecrobo {
 		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10
 	}
 
+	//% blockId=artec_water_level_sensor
+	//% block="waterlevel sensor pin %_connector"
+	export function waterlevelSensor(_connector: connectorSensor): number {
+		return pins.analogReadPin(_connector)
+	}
+
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"

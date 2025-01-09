@@ -176,13 +176,13 @@ namespace artecrobo {
 	//% blockId=artec_temperature_sensor
 	//% block="temperature sensor pin %_connector"
 	export function temperatureSensor(_connector: connectorSensor): number {
-		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10
+		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10;
 	}
 
 	//% blockId=artec_water_level_sensor
 	//% block="waterlevel sensor pin %_connector"
 	export function waterlevelSensor(_connector: connectorSensor): number {
-		return pins.analogReadPin(_connector)
+		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_ultrasonic_sensor

@@ -192,7 +192,7 @@ namespace artecrobo {
 		basic.pause(10);
 		pins.digitalWritePin(_connector, 0);
 		pins.onPulsed(DigitalPin.P0 , 1, () => {
-			const pulse_time = pins.pulseIn(_connector, PulseValue.Low, 10000);
+			const pulse_time = pins.pulseIn(DigitalPin.P0, PulseValue.Low, 10000);
 			const dist = pulse_time * 34000 / 1000000 /2;
 			return dist;
 		});

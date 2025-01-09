@@ -49,6 +49,15 @@ enum connectorSound{
 	P2 = AnalogPin.P2
 }
 
+enum connectorDigitalSensor{
+	//% block="P0"
+	P0 = DigitalPin.P0,
+	//% block="P1"
+	P1 = DigitalPin.P1,
+	//% block="P2"
+	P2 = DigitalPin.P2
+}
+
 
 /**
  * ArtecRobo control package
@@ -178,7 +187,7 @@ namespace artecrobo {
 
 	//% blockId=artec_ultrasonic_sensor
 	//% block="ultrasonic sensor pin %_connector"
-	export function ultraSonicSensor(_connector: connectorSensor): number {
+	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
 		pins.digitalWritePin(_connector, 1);
 		basic.pause(10);
 		pins.digitalWritePin(_connector, 0);

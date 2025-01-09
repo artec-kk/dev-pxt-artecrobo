@@ -188,15 +188,16 @@ namespace artecrobo {
 	//% blockId=artec_ultrasonic_sensor
 	//% block="ultrasonic sensor pin %_connector"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
-		pins.digitalWritePin(_connector, 1);
-		basic.pause(10);
 		pins.digitalWritePin(_connector, 0);
-		pins.onPulsed(DigitalPin.P0, PulseValue.High, function(){
-			const pulse_time = pins.pulseIn(DigitalPin.P0, PulseValue.Low);
-			const dist = pulse_time * 34000 / 1000000 /2;
-			return dist;
-		});
-	return 0
+		control.waitMicros(2);
+		pins.digitalWritePin(_connector, 1);
+		control.waitMicros(10)
+		pins.digitalWritePin(_connector, 0);
+		const pulse_time = pins.pulseIn(_connector, PulseValue.High);
+		const dist = pulse_time * 34000 / 1000000 /2;
+		pins.digitalWritePin(_connector, 0);
+		basic.pause(100);
+		return dist;
 	}
 
 

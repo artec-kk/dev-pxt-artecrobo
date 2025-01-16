@@ -136,28 +136,6 @@ namespace artecrobo {
 		music.ringTone(_note);
 	}
 
-	//% blockId=artec_set_speed_dc_motor
-	//% block="DC motor %_connector| speed: %_speed"
-	//% _speed.min=0 _speed.max=1023
-	export function setSpeedDCMotor(_connector: connectorDCMotor, _speed: number): void {
-		if (_speed < 0)		{ _speed = 0; }
-		if (_speed > 1023)	{ _speed = 1023; }
-		if (_connector == connectorDCMotor.M1) {
-			speedM1 = 1023 - _speed;
-		} else {
-			speedM2 = 1023 - _speed;
-		}
-		if (state == DCmotion.Forward || state == DCmotion.Backward) {
-			moveDCMotor(_connector, state);
-		}
-	}
-	let angleP13 = 90;
-	let angleP14 = 90;
-	let angleP15 = 90;
-	pins.servoWritePin(AnalogPin.P13, angleP13);
-	pins.servoWritePin(AnalogPin.P14, angleP14);
-	pins.servoWritePin(AnalogPin.P15, angleP15);
-
 	//% blockId=artec_move_servo_motor_max
 	//% block="move servo pin %_connector| to (degrees) %_angle"
 	//% _angle.min=0 _angle.max=180
@@ -315,6 +293,28 @@ namespace artecrobo {
 		if (diffP14 != 0) pins.servoWritePin(AnalogPin.P14, angleP14);
 		if (diffP15 != 0) pins.servoWritePin(AnalogPin.P15, angleP15);
 	}
+
+	//% blockId=artec_set_speed_dc_motor
+	//% block="DC motor %_connector| speed: %_speed"
+	//% _speed.min=0 _speed.max=1023
+	export function setSpeedDCMotor(_connector: connectorDCMotor, _speed: number): void {
+		if (_speed < 0)		{ _speed = 0; }
+		if (_speed > 1023)	{ _speed = 1023; }
+		if (_connector == connectorDCMotor.M1) {
+			speedM1 = 1023 - _speed;
+		} else {
+			speedM2 = 1023 - _speed;
+		}
+		if (state == DCmotion.Forward || state == DCmotion.Backward) {
+			moveDCMotor(_connector, state);
+		}
+	}
+	let angleP13 = 90;
+	let angleP14 = 90;
+	let angleP15 = 90;
+	pins.servoWritePin(AnalogPin.P13, angleP13);
+	pins.servoWritePin(AnalogPin.P14, angleP14);
+	pins.servoWritePin(AnalogPin.P15, angleP15);
 
 	// Move DC motor
 	//% blockId=artec_move_dc_motor

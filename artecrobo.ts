@@ -70,71 +70,6 @@ namespace artecrobo {
 	let speedM2 = 1023;
 	let state = DCmotion.Brake;
 
-	// Move DC motor
-	//% blockId=artec_move_dc_motor
-	//% block="DC motor %_connector| motion: %_motion"
-	export function moveDCMotor(_connector: connectorDCMotor, _motion: DCmotion): void {
-		switch(_motion) {
-			case DCmotion.Forward:
-				/*
-					Move Forward
-					M1:P8 = speed, P12 = 0
-					M2:P0 = speed, P16 = 0
-				*/
-				if (_connector == connectorDCMotor.M1) {
-					pins.digitalWritePin(DigitalPin.P8, 1);
-					pins.analogWritePin(AnalogPin.P12, speedM1);
-				} else {
-					pins.digitalWritePin(DigitalPin.P0, 1);
-					pins.analogWritePin(AnalogPin.P16, speedM2);
-				}
-				break;
-			case DCmotion.Backward:
-				/*
-					Move Backward
-					M1:P8 = 0, P12 = speeed
-					M2:P0 = 0, P16 = speeed
-				*/
-				if (_connector == connectorDCMotor.M1) {
-					pins.analogWritePin(AnalogPin.P8, speedM1);
-					pins.digitalWritePin(DigitalPin.P12, 1);
-				} else {
-					pins.analogWritePin(AnalogPin.P0, speedM2);
-					pins.digitalWritePin(DigitalPin.P16, 1);
-				}
-				break;
-			case DCmotion.Brake:
-				/*
-					Brake
-					M1:P8 = 1, P12 = 1
-					M2:P0 = 1, P16 = 1
-				*/
-				if (_connector == connectorDCMotor.M1) {
-					pins.digitalWritePin(DigitalPin.P8, 1);
-					pins.digitalWritePin(DigitalPin.P12, 1);
-				} else {
-					pins.digitalWritePin(DigitalPin.P0, 1);
-					pins.digitalWritePin(DigitalPin.P16, 1);
-				}
-				break;
-			case DCmotion.Coast:
-				/*
-					Coast
-					M1:P8 = 0, P12 = 0
-					M2:P0 = 0, P16 = 0
-				*/
-				if (_connector == connectorDCMotor.M1) {
-					pins.digitalWritePin(DigitalPin.P8, 0);
-					pins.digitalWritePin(DigitalPin.P12, 0);
-				} else {
-					pins.digitalWritePin(DigitalPin.P0, 0);
-					pins.digitalWritePin(DigitalPin.P16, 0);
-				}
-				break;
-		}
-		state = _motion;
-	}
-
 	//% blockId=artec_light_sensor
 	//% block="light sensor pin %_connector"
 	export function lightSensor(_connector: connectorSensor): number {
@@ -379,5 +314,70 @@ namespace artecrobo {
 		if (diffP13 != 0) pins.servoWritePin(AnalogPin.P13, angleP13);
 		if (diffP14 != 0) pins.servoWritePin(AnalogPin.P14, angleP14);
 		if (diffP15 != 0) pins.servoWritePin(AnalogPin.P15, angleP15);
+	}
+
+	// Move DC motor
+	//% blockId=artec_move_dc_motor
+	//% block="DC motor %_connector| motion: %_motion"
+	export function moveDCMotor(_connector: connectorDCMotor, _motion: DCmotion): void {
+		switch(_motion) {
+			case DCmotion.Forward:
+				/*
+					Move Forward
+					M1:P8 = speed, P12 = 0
+					M2:P0 = speed, P16 = 0
+				*/
+				if (_connector == connectorDCMotor.M1) {
+					pins.digitalWritePin(DigitalPin.P8, 1);
+					pins.analogWritePin(AnalogPin.P12, speedM1);
+				} else {
+					pins.digitalWritePin(DigitalPin.P0, 1);
+					pins.analogWritePin(AnalogPin.P16, speedM2);
+				}
+				break;
+			case DCmotion.Backward:
+				/*
+					Move Backward
+					M1:P8 = 0, P12 = speeed
+					M2:P0 = 0, P16 = speeed
+				*/
+				if (_connector == connectorDCMotor.M1) {
+					pins.analogWritePin(AnalogPin.P8, speedM1);
+					pins.digitalWritePin(DigitalPin.P12, 1);
+				} else {
+					pins.analogWritePin(AnalogPin.P0, speedM2);
+					pins.digitalWritePin(DigitalPin.P16, 1);
+				}
+				break;
+			case DCmotion.Brake:
+				/*
+					Brake
+					M1:P8 = 1, P12 = 1
+					M2:P0 = 1, P16 = 1
+				*/
+				if (_connector == connectorDCMotor.M1) {
+					pins.digitalWritePin(DigitalPin.P8, 1);
+					pins.digitalWritePin(DigitalPin.P12, 1);
+				} else {
+					pins.digitalWritePin(DigitalPin.P0, 1);
+					pins.digitalWritePin(DigitalPin.P16, 1);
+				}
+				break;
+			case DCmotion.Coast:
+				/*
+					Coast
+					M1:P8 = 0, P12 = 0
+					M2:P0 = 0, P16 = 0
+				*/
+				if (_connector == connectorDCMotor.M1) {
+					pins.digitalWritePin(DigitalPin.P8, 0);
+					pins.digitalWritePin(DigitalPin.P12, 0);
+				} else {
+					pins.digitalWritePin(DigitalPin.P0, 0);
+					pins.digitalWritePin(DigitalPin.P16, 0);
+				}
+				break;
+		}
+		state = _motion;
 	}
 }

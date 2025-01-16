@@ -88,25 +88,6 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
-	//% blockId=artec_LED_lighting
-	//% block="LED lighting pin %_connector"
-	export function ledLighting(_connector: connectorOutput){
-		pins.digitalWritePin(_connector, 1);
-	}
-
-	//% blockId=artec_LED_off
-	//% block="LED off pin %_connector"
-	export function ledOff(_connector: connectorOutput){
-		pins.digitalWritePin(_connector, 0);
-	}
-
-    //% blockId=artec_make_sound
-	//% block="makeSound pin %_connector Hz %_note"
-    //% _note.shadow="device_note"
-	export function makeSound(_connector: connectorSound,_note: number){
-		pins.analogSetPitchPin(_connector);
-		music.ringTone(_note);
-	}
 
 	//% blockId=artec_temperature_sensor
 	//% block="temperature sensor pin %_connector"
@@ -135,6 +116,25 @@ namespace artecrobo {
 		return dist;
 	}
 
+	//% blockId=artec_LED_lighting
+	//% block="LED lighting pin %_connector"
+	export function ledLighting(_connector: connectorOutput){
+		pins.digitalWritePin(_connector, 1);
+	}
+
+	//% blockId=artec_LED_off
+	//% block="LED off pin %_connector"
+	export function ledOff(_connector: connectorOutput){
+		pins.digitalWritePin(_connector, 0);
+	}
+
+    //% blockId=artec_make_sound
+	//% block="makeSound pin %_connector Hz %_note"
+    //% _note.shadow="device_note"
+	export function makeSound(_connector: connectorSound,_note: number){
+		pins.analogSetPitchPin(_connector);
+		music.ringTone(_note);
+	}
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"

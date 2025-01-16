@@ -28,19 +28,9 @@ enum connectorServoMotor {
 	P15 = AnalogPin.P15
 }
 
-enum connectorSensor{
-	//% block="P1"
-	P1 = AnalogPin.P1,
-	//% block="P2"
-	P2 = AnalogPin.P2
-}
 
-enum connectorOutput{
-	//% block="P0"
-	P0 = AnalogPin.P0
-}
 
-enum connectorSound{
+enum connectorAnalogSensor{
 	//% block="P0"
 	P0 = AnalogPin.P0,
 	//% block="P1"
@@ -67,32 +57,32 @@ namespace artecrobo {
 
 	//% blockId=artec_light_sensor
 	//% block="light sensor pin %_connector"
-	export function lightSensor(_connector: connectorSensor): number {
+	export function lightSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_sound_sensor
 	//% block="sound sensor pin %_connector"
-	export function soundSensor(_connector: connectorSensor): number {
+	export function soundSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_photo_reflector
 	//% block="sound sensor pin %_connector"
-	export function photoReflector(_connector: connectorSensor): number {
+	export function photoReflector(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 
 	//% blockId=artec_temperature_sensor
 	//% block="temperature sensor pin %_connector"
-	export function temperatureSensor(_connector: connectorSensor): number {
+	export function temperatureSensor(_connector: connectorAnalogSensor): number {
 		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10;
 	}
 
 	//% blockId=artec_water_level_sensor
 	//% block="waterlevel sensor pin %_connector"
-	export function waterlevelSensor(_connector: connectorSensor): number {
+	export function waterlevelSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
@@ -113,20 +103,20 @@ namespace artecrobo {
 
 	//% blockId=artec_LED_lighting
 	//% block="LED lighting pin %_connector"
-	export function ledLighting(_connector: connectorOutput){
+	export function ledLighting(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 1);
 	}
 
 	//% blockId=artec_LED_off
 	//% block="LED off pin %_connector"
-	export function ledOff(_connector: connectorOutput){
+	export function ledOff(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 0);
 	}
 
     //% blockId=artec_make_sound
 	//% block="makeSound pin %_connector Hz %_note"
     //% _note.shadow="device_note"
-	export function makeSound(_connector: connectorSound,_note: number){
+	export function makeSound(_connector: connectorAnalogSensor,_note: number){
 		pins.analogSetPitchPin(_connector);
 		music.ringTone(_note);
 	}

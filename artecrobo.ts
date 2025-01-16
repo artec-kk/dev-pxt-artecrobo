@@ -65,11 +65,6 @@ enum connectorDigitalSensor{
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 namespace artecrobo {
 
-	/* spped initial value */
-	let speedM1 = 1023;
-	let speedM2 = 1023;
-	let state = DCmotion.Brake;
-
 	//% blockId=artec_light_sensor
 	//% block="light sensor pin %_connector"
 	export function lightSensor(_connector: connectorSensor): number {
@@ -301,6 +296,11 @@ namespace artecrobo {
 		if (diffP14 != 0) pins.servoWritePin(AnalogPin.P14, angleP14);
 		if (diffP15 != 0) pins.servoWritePin(AnalogPin.P15, angleP15);
 	}
+
+		/* spped initial value */
+		let speedM1 = 1023;
+		let speedM2 = 1023;
+		let state = DCmotion.Brake;
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"

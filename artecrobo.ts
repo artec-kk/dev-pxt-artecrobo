@@ -113,6 +113,17 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 	}
 
+	//% blockkId=artec_is_led_lighting
+	//% block="light sensor pin %_connector is on"
+	export function islightSensor(_connector: connectorDigitalSensor): boolean{
+		if(pins.digitalReadPin(_connector)){
+            pins.digitalWritePin(_connecotr);
+            return true;
+        }else{
+            return false;
+        }
+	}
+
     //% blockId=artec_make_sound
 	//% block="makeSound pin %_connector Hz %_note"
     //% _note.shadow="device_note"

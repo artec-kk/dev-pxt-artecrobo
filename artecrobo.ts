@@ -117,7 +117,7 @@ namespace artecrobo {
 	//% block="light sensor pin %_connector is on"
 	export function islightSensor(_connector: connectorDigitalSensor): boolean{
 		if(pins.digitalReadPin(_connector)){
-            pins.digitalWritePin(_connecotr);
+            pins.digitalWritePin(_connector);
             return true;
         }else{
             return false;

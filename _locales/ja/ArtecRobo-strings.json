@@ -22,4 +22,5 @@
   ,"artecrobo.temperatureSensor|block": "温度センサー| 端子: %_connector"
   ,"artecrobo.waterlevelSensor|block": "水位センサー| 端子: %_connector"
   ,"artecrobo.ultraSonicSensor|block": "超音波センサー 測定した距離 | 端子: %_connector"
+  ,"artecrobo.isLEDLighting|block": "LED |端子: |が点灯している"
 }

@@ -48,6 +48,13 @@ enum connectorDigitalSensor{
 	P2 = DigitalPin.P2
 }
 
+enum connectorTouchSensor{
+	//% block="A"
+	P1 = DigitalPin.P5,
+	//% block="B"
+	P2 = DigitalPin.P11
+}
+
 
 /**
  * ArtecRobo control package
@@ -114,8 +121,8 @@ namespace artecrobo {
 	}
 
 	//% blockkId=artec_is_led_lighting
-	//% block="light sensor pin %_connector is on"
-	export function islightSensor(_connector: connectorDigitalSensor): boolean{
+	//% block="LED pin %_connector is on"
+	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
 		if(pins.digitalReadPin(_connector)){
             pins.digitalWritePin(_connector,1);
             return true;
@@ -131,6 +138,8 @@ namespace artecrobo {
 		pins.analogSetPitchPin(_connector);
 		music.ringTone(_note);
 	}
+
+
 
 	let angleP13 = 90;
 	let angleP14 = 90;

@@ -115,6 +115,18 @@ namespace artecrobo {
 		return dist;
 	}
 
+	//% blockkId=artec_is_led_lighting
+	//% block="LED pin %_connector is on"
+	//% group="LED"
+	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
+		if(pins.digitalReadPin(_connector)){
+            pins.digitalWritePin(_connector,1);
+            return true;
+        }else{
+            return false;
+        }
+	}
+
 	//% blockId=artec_LED_lighting
 	//% block="LED lighting pin %_connector"
 	//% group="LED"
@@ -129,17 +141,7 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 	}
 
-	//% blockkId=artec_is_led_lighting
-	//% block="LED pin %_connector is on"
-	//% group="LED"
-	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
-		if(pins.digitalReadPin(_connector)){
-            pins.digitalWritePin(_connector,1);
-            return true;
-        }else{
-            return false;
-        }
-	}
+
 
     //% blockId=artec_make_sound
 	//% block="makeSound pin %_connector Hz %_note"

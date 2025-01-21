@@ -60,22 +60,26 @@ enum connectorTouchSensor{
  * ArtecRobo control package
  */
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
+//% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
 
 	//% blockId=artec_light_sensor
 	//% block="light sensor pin %_connector"
+	//% group="Sensor"
 	export function lightSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_sound_sensor
 	//% block="sound sensor pin %_connector"
+	//% group="Sensor"
 	export function soundSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_photo_reflector
 	//% block="sound sensor pin %_connector"
+	//% group="Sensor"
 	export function photoReflector(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
@@ -83,18 +87,21 @@ namespace artecrobo {
 
 	//% blockId=artec_temperature_sensor
 	//% block="temperature sensor pin %_connector"
+	//% group="Sensor"
 	export function temperatureSensor(_connector: connectorAnalogSensor): number {
 		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10;
 	}
 
 	//% blockId=artec_water_level_sensor
 	//% block="waterlevel sensor pin %_connector"
+	//% group="Sensor"
 	export function waterlevelSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_ultrasonic_sensor
 	//% block="ultrasonic sensor pin %_connector"
+	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
 		pins.digitalWritePin(_connector, 0);
 		control.waitMicros(2);
@@ -110,18 +117,21 @@ namespace artecrobo {
 
 	//% blockId=artec_LED_lighting
 	//% block="LED lighting pin %_connector"
+	//% group="LED"
 	export function ledLighting(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 1);
 	}
 
 	//% blockId=artec_LED_off
 	//% block="LED off pin %_connector"
+	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 0);
 	}
 
 	//% blockkId=artec_is_led_lighting
 	//% block="LED pin %_connector is on"
+	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
 		if(pins.digitalReadPin(_connector)){
             pins.digitalWritePin(_connector,1);
@@ -134,6 +144,7 @@ namespace artecrobo {
     //% blockId=artec_make_sound
 	//% block="makeSound pin %_connector Hz %_note"
     //% _note.shadow="device_note"
+	//% group="Sound"
 	export function makeSound(_connector: connectorAnalogSensor,_note: number){
 		pins.analogSetPitchPin(_connector);
 		music.ringTone(_note);
@@ -152,6 +163,7 @@ namespace artecrobo {
 	//% blockId=artec_move_servo_motor_max
 	//% block="move servo pin %_connector| to (degrees) %_angle"
 	//% _angle.min=0 _angle.max=180
+	//% group="Motor"
 	export function moveServoMotorMax(_connector: connectorServoMotor, _angle: number): void {
 		if (_angle < 0)		{ _angle = 0; }
 		if (_angle > 180)	{ _angle = 180; }
@@ -177,6 +189,7 @@ namespace artecrobo {
 	//% block="move servo pin %_connector| to (degrees) %_angle| speed: %_speed"
 	//% _angle.min=0 _angle.max=180
 	//% _speed.min=0 _speed.max=20
+	//% group="Motor"
 	export function moveServoMotor(_connector: connectorServoMotor, _angle: number, _speed: number): void {
 		if (_speed < 1)		{ _speed = 1; }
 		if (_speed > 20)	{ _speed = 20; }
@@ -226,6 +239,7 @@ namespace artecrobo {
 	//% weight=84
 	//% blockId=artec_async_move_servo_motor
 	//% block="move servo synchronously | speed: %_speed| P13 (degrees): %_angle13| P14 (degrees): %_angle14 |P15 (degrees): %_angle15"
+	//% group="Motor"
 	//% _speed.min=1 _speed.max=20
 	//% _angle13.min=0 _angle13.max=180
 	//% _angle14.min=0 _angle14.max=180
@@ -315,6 +329,7 @@ namespace artecrobo {
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"
 	//% _speed.min=0 _speed.max=1023
+	//% group="Motor"
 	export function setSpeedDCMotor(_connector: connectorDCMotor, _speed: number): void {
 		if (_speed < 0)		{ _speed = 0; }
 		if (_speed > 1023)	{ _speed = 1023; }
@@ -331,6 +346,7 @@ namespace artecrobo {
 	// Move DC motor
 	//% blockId=artec_move_dc_motor
 	//% block="DC motor %_connector| motion: %_motion"
+	//% group="Motor"
 	export function moveDCMotor(_connector: connectorDCMotor, _motion: DCmotion): void {
 		switch(_motion) {
 			case DCmotion.Forward:

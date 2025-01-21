@@ -48,13 +48,6 @@ enum connectorDigitalSensor{
 	P2 = DigitalPin.P2
 }
 
-enum connectorTouchSensor{
-	//% block="A"
-	P1 = DigitalPin.P5,
-	//% block="B"
-	P2 = DigitalPin.P11
-}
-
 
 /**
  * ArtecRobo control package
@@ -140,7 +133,6 @@ namespace artecrobo {
 	export function ledOff(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 0);
 	}
-
 
 
     //% blockId=artec_make_sound

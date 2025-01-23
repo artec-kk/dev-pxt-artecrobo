@@ -57,21 +57,21 @@ enum connectorDigitalSensor{
 namespace artecrobo {
 
 	//% blockId=artec_light_sensor
-	//% block="light sensor pin %_connector"
+	//% block="Light sensor pin %_connector"
 	//% group="Sensor"
 	export function lightSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_sound_sensor
-	//% block="sound sensor pin %_connector"
+	//% block="Sound sensor pin %_connector"
 	//% group="Sensor"
 	export function soundSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_photo_reflector
-	//% block="sound sensor pin %_connector"
+	//% block="IR Photoreflector pin %_connector"
 	//% group="Sensor"
 	export function photoReflector(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
@@ -79,21 +79,21 @@ namespace artecrobo {
 
 
 	//% blockId=artec_temperature_sensor
-	//% block="temperature sensor pin %_connector"
+	//% block="Temperature sensor pin %_connector"
 	//% group="Sensor"
 	export function temperatureSensor(_connector: connectorAnalogSensor): number {
 		return (pins.analogReadPin(_connector) / 1023 * 3300 - 500) / 10;
 	}
 
 	//% blockId=artec_water_level_sensor
-	//% block="waterlevel sensor pin %_connector"
+	//% block="Waterlevel sensor pin %_connector"
 	//% group="Sensor"
 	export function waterlevelSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
 	//% blockId=artec_ultrasonic_sensor
-	//% block="ultrasonic sensor pin %_connector"
+	//% block="Ultrasonic sensor pin %_connector"
 	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
 		pins.digitalWritePin(_connector, 0);
@@ -109,7 +109,7 @@ namespace artecrobo {
 	}
 
 	//% blockkId=artec_is_led_lighting
-	//% block="LED pin %_connector is on"
+	//% block="LED point pin %_connector"
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
 		if(pins.digitalReadPin(_connector)){
@@ -121,14 +121,14 @@ namespace artecrobo {
 	}
 
 	//% blockId=artec_LED_lighting
-	//% block="LED lighting pin %_connector"
+	//% block="LED turn on pin %_connector"
 	//% group="LED"
 	export function ledLighting(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 1);
 	}
 
 	//% blockId=artec_LED_off
-	//% block="LED off pin %_connector"
+	//% block="LED turn off pin %_connector"
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 0);
@@ -136,7 +136,7 @@ namespace artecrobo {
 
 
     //% blockId=artec_make_sound
-	//% block="makeSound pin %_connector Hz %_note"
+	//% block="Sound play pin %_connector Hz %_note"
     //% _note.shadow="device_note"
 	//% group="Sound"
 	export function makeSound(_connector: connectorAnalogSensor,_note: number){

@@ -23,4 +23,6 @@
   ,"artecrobo.waterlevelSensor|block": "水位センサー| 端子: %_connector"
   ,"artecrobo.ultraSonicSensor|block": "超音波センサー 測定した距離 | 端子: %_connector"
   ,"artecrobo.isLEDLighting|block": "LED |端子: %_connector が点灯している"
+  ,"artecrobo.buttonA|block": "ボタンA"
+  ,"artecrobo.buttonB|block": "ボタンB"
 }

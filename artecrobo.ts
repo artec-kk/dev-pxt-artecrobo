@@ -92,6 +92,20 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
+	//% blockId=artec_button_A
+	//% block="Button A"
+	//% group="Sensor"
+	export function buttonA(): number {
+		return pins.digitalReadPin(DigitalPin.P5);
+	}
+
+	//% blockId=artec_button_B
+	//% block="Button B"
+	//% group="Sensor"
+	export function buttonB(): number {
+		return pins.digitalReadPin(DigitalPin.P11);
+	}
+
 	//% blockId=artec_ultrasonic_sensor
 	//% block="Ultrasonic sensor pin %_connector"
 	//% group="Sensor"

@@ -151,6 +151,13 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 	}
 
+	//% blockId=artec_stop_sound
+	//% block="Sound stop pin %_connector"
+	//% group="Sound"
+	export function stopSound(_connector: connectorAnalogSensor){
+		pins.analogSetPitchPin(_connector);
+		music.stopAllSounds();
+	}
 
     //% blockId=artec_make_sound
 	//% block="Sound play pin %_connector Hz %_note"

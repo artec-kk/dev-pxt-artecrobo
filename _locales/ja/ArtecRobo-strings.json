@@ -18,11 +18,12 @@
   ,"artecrobo.photoReflector|block": "赤外線フォトリフレクタ| 端子: %_connector"
   ,"artecrobo.ledLighting|block": "LED 点灯| 端子: %_connector"
   ,"artecrobo.ledOff|block": "LED 消灯| 端子: %_connector"
-  ,"artecrobo.makeSound|block": "音を鳴らす| 端子: %_connector| 音の高さ: %_note"
+  ,"artecrobo.makeSound|block": "ブザーから音を鳴らす| 端子: %_connector| 音の高さ: %_note"
   ,"artecrobo.temperatureSensor|block": "温度センサー| 端子: %_connector"
   ,"artecrobo.waterlevelSensor|block": "水位センサー| 端子: %_connector"
   ,"artecrobo.ultraSonicSensor|block": "超音波センサー 測定した距離 | 端子: %_connector"
   ,"artecrobo.isLEDLighting|block": "LED |端子: %_connector が点灯している"
   ,"artecrobo.buttonA|block": "ボタンA"
   ,"artecrobo.buttonB|block": "ボタンB"
+  ,"artecrobo.stopSound|block": "ブザーからの音を止める| 端子: %_connector"
 }

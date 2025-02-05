@@ -165,8 +165,7 @@ namespace artecrobo {
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
 	export function stopSound(_connector: connectorAnalogSensor){
-		pins.analogSetPitchPin(_connector);
-		music.stopAllSounds();
+		pins.analogWritePin(_connector, 0);
 	}
 
     //% blockId=artec_make_sound
@@ -174,8 +173,8 @@ namespace artecrobo {
     //% _note.shadow="device_note"
 	//% group="Sound"
 	export function makeSound(_connector: connectorAnalogSensor,_note: number){
-		pins.analogSetPitchPin(_connector);
-		music.ringTone(_note);
+		pins.analogWritePin(_connector, 512);
+		pins.analogSetPeriod(_connector, Math.round(1000000/_note));
 	}
 
 

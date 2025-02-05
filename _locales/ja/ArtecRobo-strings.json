@@ -25,4 +25,5 @@
   ,"artecrobo.isLEDLighting|block": "LED |端子: %_connector が点灯している"
   ,"artecrobo.stopSound|block": "ブザーからの音を止める| 端子: %_connector"
   ,"artecrobo.touchSensor|block": "タッチセンサー| 端子: %_connector が押されている"
+  ,"artecrobo.isSound|block": "音が鳴っている| 端子: %_connector"
 }

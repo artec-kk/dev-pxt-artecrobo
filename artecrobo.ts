@@ -166,6 +166,7 @@ namespace artecrobo {
 	//% group="Sound"
 	export function stopSound(_connector: connectorAnalogSensor){
 		pins.analogWritePin(_connector, 0);
+		pins.analogSetPeriod(_connector,20000);
 	}
 
     //% blockId=artec_make_sound
@@ -175,6 +176,17 @@ namespace artecrobo {
 	export function makeSound(_connector: connectorAnalogSensor,_note: number){
 		pins.analogWritePin(_connector, 512);
 		pins.analogSetPeriod(_connector, Math.round(1000000/_note));
+	}
+
+	//% blockId=artec_issoundplay
+	//% block="is Sound play pin %_connector"
+	//% group="Sound"
+	export function isSound(_connector: connectorAnalogSensor): boolean{
+		if(pins.analogReadPin(_connector)>500){
+			pins.analogWritePin(_connector, 512);
+			return true;
+		}
+		return false;
 	}
 
 

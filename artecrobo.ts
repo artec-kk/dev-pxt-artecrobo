@@ -19,6 +19,13 @@ enum connectorDCMotor {
 	M2
 }
 
+enum connectorTouchSensor{
+	//% block="A"
+	A,
+	//% block="B"
+	B
+}
+
 enum connectorServoMotor {
 	//% block="P13"
 	P13 = AnalogPin.P13,
@@ -55,20 +62,7 @@ enum connectorDigitalSensor{
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
-	
-	//% blockId=artec_button_B
-	//% block="Button B"
-	//% group="Sensor"
-	export function buttonB(): number {
-		return pins.digitalReadPin(DigitalPin.P11);
-	}
 
-	//% blockId=artec_button_A
-	//% block="Button A"
-	//% group="Sensor"
-	export function buttonA(): number {
-		return pins.digitalReadPin(DigitalPin.P5);
-	}
 
 	//% blockId=artec_light_sensor
 	//% block="Light sensor pin %_connector"
@@ -105,6 +99,23 @@ namespace artecrobo {
 	export function waterlevelSensor(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
+
+	//% blockId=artec_touch_sensor
+	//% block="touch sensor pin %_connector"
+	//% group="Sensor"
+	export function touchSensor(_connector: connectorTouchSensor): boolean {
+		switch(_connector){
+			case connectorTouchSensor.A:
+				if(pins.digitalReadPin(DigitalPin.P5) == 0) return true;
+				return false;
+			case connectorTouchSensor.B:
+				if(pins.digitalReadPin(DigitalPin.P11) == 0) return true;
+				return false;
+			default:
+				return false;
+		}
+	}
+
 
 
 

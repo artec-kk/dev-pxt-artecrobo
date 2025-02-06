@@ -117,19 +117,6 @@ namespace artecrobo {
 		return dist;
 	}
 
-	//% blockId=artec_on_touchsensor
-	//% block="on pressed Touch Sensor pin $_connector"
-	//% group="Sensor"
-    export function onTouchSensor(_connector: connectorTouchSensor, handler: () => void) {
-        switch(_connector){
-			case connectorTouchSensor.A:
-				input.onButtonPressed(Button.A, handler);
-				break;
-			case connectorTouchSensor.B:
-				input.onButtonPressed(Button.B,handler);
-				break;
-			}
-	}
 
 	//% blockId=artec_touch_sensor
 	//% block="touch sensor pin %_connector"
@@ -147,6 +134,19 @@ namespace artecrobo {
 		}
 	}
 
+	//% blockId=artec_on_touchsensor
+	//% block="on pressed Touch Sensor pin $_connector"
+	//% group="Sensor"
+    export function onTouchSensor(_connector: connectorTouchSensor, handler: () => void) {
+        switch(_connector){
+			case connectorTouchSensor.A:
+				input.onButtonPressed(Button.A, handler);
+				break;
+			case connectorTouchSensor.B:
+				input.onButtonPressed(Button.B,handler);
+				break;
+			}
+	}
 
 	//% blockkId=artec_is_led_lighting
 	//% block="LED point pin %_connector"
@@ -174,6 +174,15 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 	}
 
+	//% blockId=artec_issoundplay
+	//% block="is Sound play pin %_connector"
+	//% group="Sound"
+	export function isSound(_connector: connectorAnalogSensor): boolean{
+		if(music.isSoundPlaying()){
+		}
+		return false;
+	}
+
 	//% blockId=artec_stop_sound
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
@@ -189,17 +198,6 @@ namespace artecrobo {
 	export function makeSound(_connector: connectorAnalogSensor,_note: number){
 		pins.analogWritePin(_connector, 512);
 		pins.analogSetPeriod(_connector, Math.round(1000000/_note));
-	}
-
-	//% blockId=artec_issoundplay
-	//% block="is Sound play pin %_connector"
-	//% group="Sound"
-	export function isSound(_connector: connectorAnalogSensor): boolean{
-		if(pins.analogReadPin(_connector)>500){
-			pins.analogWritePin(_connector, 512);
-			return true;
-		}
-		return false;
 	}
 
 

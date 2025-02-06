@@ -123,12 +123,12 @@ namespace artecrobo {
     export function onTouchSensor(_connector: connectorTouchSensor, handler: () => void) {
         switch(_connector){
 			case connectorTouchSensor.A:
-				if(pins.digitalReadPin(DigitalPin.P5) == 0) handler();
+				input.onButtonPressed(Button.A, handler);
 				break;
 			case connectorTouchSensor.B:
-				if(pins.digitalReadPin(DigitalPin.P11) == 0) handler();
+				input.onButtonPressed(Button.B,handler);
 				break;
-		}
+			}
 	}
 
 	//% blockId=artec_touch_sensor

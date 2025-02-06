@@ -127,6 +127,7 @@ namespace artecrobo {
 			case connectorTouchSensor.B:
 				if(pins.digitalReadPin(DigitalPin.P11) == 0) handler();
 			default:
+				basic.showIcon(IconNames.Heart);
 		}
 	}
 

@@ -124,10 +124,10 @@ namespace artecrobo {
         switch(_connector){
 			case connectorTouchSensor.A:
 				if(pins.digitalReadPin(DigitalPin.P5) == 0) handler();
+				break;
 			case connectorTouchSensor.B:
 				if(pins.digitalReadPin(DigitalPin.P11) == 0) handler();
-			default:
-				basic.showIcon(IconNames.Heart);
+				break;
 		}
 	}
 

@@ -100,24 +100,6 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
-	//% blockId=artec_touch_sensor
-	//% block="touch sensor pin %_connector"
-	//% group="Sensor"
-	export function touchSensor(_connector: connectorTouchSensor): boolean {
-		switch(_connector){
-			case connectorTouchSensor.A:
-				if(pins.digitalReadPin(DigitalPin.P5) == 0) return true;
-				return false;
-			case connectorTouchSensor.B:
-				if(pins.digitalReadPin(DigitalPin.P11) == 0) return true;
-				return false;
-			default:
-				return false;
-		}
-	}
-
-
-
 
 	//% blockId=artec_ultrasonic_sensor
 	//% block="Ultrasonic sensor pin %_connector"
@@ -134,6 +116,36 @@ namespace artecrobo {
 		basic.pause(100);
 		return dist;
 	}
+
+	//% blockId=artec_on_touchsensor
+	//% block="on pressed Touch Sensor pin $_connector"
+	//% group="Sensor"
+    export function onTouchSensor(_connector: connectorTouchSensor, handler: () => void) {
+        switch(_connector){
+			case connectorTouchSensor.A:
+				if(pins.digitalReadPin(DigitalPin.P5) == 0) handler();
+			case connectorTouchSensor.B:
+				if(pins.digitalReadPin(DigitalPin.P11) == 0) handler();
+			default:
+		}
+	}
+
+	//% blockId=artec_touch_sensor
+	//% block="touch sensor pin %_connector"
+	//% group="Sensor"
+	export function touchSensor(_connector: connectorTouchSensor): boolean {
+		switch(_connector){
+			case connectorTouchSensor.A:
+				if(pins.digitalReadPin(DigitalPin.P5) == 0) return true;
+				return false;
+			case connectorTouchSensor.B:
+				if(pins.digitalReadPin(DigitalPin.P11) == 0) return true;
+				return false;
+			default:
+				return false;
+		}
+	}
+
 
 	//% blockkId=artec_is_led_lighting
 	//% block="LED point pin %_connector"

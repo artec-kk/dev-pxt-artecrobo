@@ -174,9 +174,9 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 	}
 
-	var isplay_P0 = false;
-	var isplay_P1 = false;
-	var isplay_P2 = false;
+	let isplay_P0 = false;
+	let isplay_P1 = false;
+	let isplay_P2 = false;
 
 	//% blockId=artec_issoundplay
 	//% block="is Sound play pin %_connector"

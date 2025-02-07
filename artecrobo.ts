@@ -189,6 +189,8 @@ namespace artecrobo {
 				return isplay_P1;
 			case connectorAnalogSensor.P2:
 				return isplay_P2;
+			default:
+				return false;
 		}
 	}
 

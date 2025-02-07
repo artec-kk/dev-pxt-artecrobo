@@ -174,21 +174,41 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 	}
 
+	var isplay_P0 = false;
+	var isplay_P1 = false;
+	var isplay_P2 = false;
+
 	//% blockId=artec_issoundplay
 	//% block="is Sound play pin %_connector"
 	//% group="Sound"
 	export function isSound(_connector: connectorAnalogSensor): boolean{
-		if(music.isSoundPlaying()){
+		switch(_connector){
+			case connectorAnalogSensor.P0:
+				return isplay_P0;
+			case connectorAnalogSensor.P1:
+				return isplay_P1;
+			case connectorAnalogSensor.P2:
+				return isplay_P2;
 		}
-		return false;
 	}
 
 	//% blockId=artec_stop_sound
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
 	export function stopSound(_connector: connectorAnalogSensor){
-		pins.analogWritePin(_connector, 0);
-		pins.analogSetPeriod(_connector,20000);
+		pins.analogSetPitchPin(_connector);
+		music.stopAllSounds();
+		switch(_connector){
+			case connectorAnalogSensor.P0:
+				isplay_P0 = false;
+				break;
+			case connectorAnalogSensor.P1:
+				isplay_P1 = false;
+				break;
+			case connectorAnalogSensor.P2:
+				isplay_P2 = false;
+				break;
+		}
 	}
 
     //% blockId=artec_make_sound
@@ -196,8 +216,19 @@ namespace artecrobo {
     //% _note.shadow="device_note"
 	//% group="Sound"
 	export function makeSound(_connector: connectorAnalogSensor,_note: number){
-		pins.analogWritePin(_connector, 512);
-		pins.analogSetPeriod(_connector, Math.round(1000000/_note));
+		pins.analogSetPitchPin(_connector);
+		music.ringTone(_note);
+		switch(_connector){
+			case connectorAnalogSensor.P0:
+				isplay_P0 = true;
+				break;
+			case connectorAnalogSensor.P1:
+				isplay_P1 = true;
+				break;
+			case connectorAnalogSensor.P2:
+				isplay_P2 = true;
+				break;
+		}
 	}
 
 

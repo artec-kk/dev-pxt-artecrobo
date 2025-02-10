@@ -181,13 +181,13 @@ namespace artecrobo {
 	//% blockId=artec_issoundplay
 	//% block="is Sound play pin %_connector"
 	//% group="Sound"
-	export function isSound(_connector: connectorAnalogSensor): boolean{
+	export function isSound(_connector: connectorDigitalSensor): boolean{
 		switch(_connector){
-			case connectorAnalogSensor.P0:
+			case connectorDigitalSensor.P0:
 				return isplay_P0;
-			case connectorAnalogSensor.P1:
+			case connectorDigitalSensor.P1:
 				return isplay_P1;
-			case connectorAnalogSensor.P2:
+			case connectorDigitalSensor.P2:
 				return isplay_P2;
 			default:
 				return false;
@@ -197,37 +197,39 @@ namespace artecrobo {
 	//% blockId=artec_stop_sound
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
-	export function stopSound(_connector: connectorAnalogSensor){
-		pins.analogSetPitchPin(_connector);
+	export function stopSound(_connector: connectorDigitalSensor){
+		pins.setAudioPin(_connector);
 		music.stopAllSounds();
 		switch(_connector){
-			case connectorAnalogSensor.P0:
+			case connectorDigitalSensor.P0:
 				isplay_P0 = false;
 				break;
-			case connectorAnalogSensor.P1:
+			case connectorDigitalSensor.P1:
 				isplay_P1 = false;
 				break;
-			case connectorAnalogSensor.P2:
+			case connectorDigitalSensor.P2:
 				isplay_P2 = false;
 				break;
 		}
+		music.setBuiltInSpeakerEnabled(true);
 	}
 
     //% blockId=artec_make_sound
 	//% block="Sound play pin %_connector Hz %_note"
     //% _note.shadow="device_note"
 	//% group="Sound"
-	export function makeSound(_connector: connectorAnalogSensor,_note: number){
-		pins.analogSetPitchPin(_connector);
+	export function makeSound(_connector: connectorDigitalSensor,_note: number){
+		pins.setAudioPin(_connector);
+		music.setBuiltInSpeakerEnabled(false);
 		music.ringTone(_note);
 		switch(_connector){
-			case connectorAnalogSensor.P0:
+			case connectorDigitalSensor.P0:
 				isplay_P0 = true;
 				break;
-			case connectorAnalogSensor.P1:
+			case connectorDigitalSensor.P1:
 				isplay_P1 = true;
 				break;
-			case connectorAnalogSensor.P2:
+			case connectorDigitalSensor.P2:
 				isplay_P2 = true;
 				break;
 		}

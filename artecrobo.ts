@@ -160,6 +160,13 @@ namespace artecrobo {
         }
 	}
 
+	//% blockId=artec_LED_off
+	//% block="LED turn off pin %_connector"
+	//% group="LED"
+	export function ledOff(_connector: connectorDigitalSensor){
+		pins.digitalWritePin(_connector, 0);
+	}
+
 	//% blockId=artec_LED_lighting
 	//% block="LED turn on pin %_connector"
 	//% group="LED"
@@ -167,12 +174,7 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 1);
 	}
 
-	//% blockId=artec_LED_off
-	//% block="LED turn off pin %_connector"
-	//% group="LED"
-	export function ledOff(_connector: connectorDigitalSensor){
-		pins.digitalWritePin(_connector, 0);
-	}
+
 
 	let isplay_P0 = false;
 	let isplay_P1 = false;

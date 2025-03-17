@@ -237,6 +237,45 @@ namespace artecrobo {
 		}
 	}
 
+	//% blockId=artec_stop_sound_both
+	//% block="Sound stop pin %_connector"
+	//% group="Sound"
+	export function stopSound_both(_connector: connectorDigitalSensor){
+		pins.setAudioPin(_connector);
+		music.stopAllSounds();
+		switch(_connector){
+			case connectorDigitalSensor.P0:
+				isplay_P0 = false;
+				break;
+			case connectorDigitalSensor.P1:
+				isplay_P1 = false;
+				break;
+			case connectorDigitalSensor.P2:
+				isplay_P2 = false;
+				break;
+		}
+	}
+
+	//% blockId=artec_make_sound_both
+	//% block="Sound play pin %_connector Hz %_note"
+    //% _note.shadow="device_note"
+	//% group="Sound"
+	export function makeSound_both(_connector: connectorDigitalSensor,_note: number){
+		pins.setAudioPin(_connector);
+		music.ringTone(_note);
+		switch(_connector){
+			case connectorDigitalSensor.P0:
+				isplay_P0 = true;
+				break;
+			case connectorDigitalSensor.P1:
+				isplay_P1 = true;
+				break;
+			case connectorDigitalSensor.P2:
+				isplay_P2 = true;
+				break;
+		}
+	}
+
 
 
 	let angleP13 = 90;

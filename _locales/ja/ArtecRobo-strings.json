@@ -24,6 +24,8 @@
   ,"artecrobo.ultraSonicSensor|block": "超音波センサー |  %_connector 測定した距離" 
   ,"artecrobo.isLEDLighting|block": "LED | %_connector が点灯している"
   ,"artecrobo.stopSound|block": "ブザー|  %_connector からの音を止める"
+  ,"artecrobo.makeSound_both|block": "本体とブザー|  %_connector から音を鳴らす| 音の高さ: %_note"
+  ,"artecrobo.stopSound_both|block": "本体とブザー|  %_connector からの音を止める"
   ,"artecrobo.touchSensor|block": "タッチセンサー|  %_connector が押されている"
   ,"artecrobo.isSound|block": "ブザー| %_connector が鳴っている"
   ,"artecrobo.onTouchSensor|block": "タッチセンサー| %_connector が押されたとき"

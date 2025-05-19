@@ -221,7 +221,9 @@ namespace artecrobo {
 	export function ledOff(_connector: connectorDigitalSensor){
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
+			console.log(pinStates[i].name)
 			if(pinStates[i].name === name){
+				console.log(pinStates[i].state)
 				if(pinStates[i].state === 'LED') {
 					pins.digitalWritePin(_connector, 0);
 					setState(name,'idle')

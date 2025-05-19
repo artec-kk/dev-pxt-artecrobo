@@ -76,7 +76,7 @@ const pins = [
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
-	
+
 	function canUse(pin: string): boolean{
 		for(let i = 0;i< pins.length;i++){
 			if(pins[i].name === pin) return pins[i].state === 'idle'
@@ -127,7 +127,7 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
-	let isultrasonicBusy = false
+	let isUltrasonicBusy = false
 
 	function getdist(_connector: connectorDigitalSensor): number{
 		pins.digitalWritePin(_connector, 0);
@@ -146,14 +146,14 @@ namespace artecrobo {
 	//% block="Ultrasonic sensor pin %_connector"
 	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
-		while(isultrasonicBusy){
+		while(isUltrasonicBusy){
 			basic.pause(5)
 		}
-		isultrasonicBusy = true
+		isUltrasonicBusy = true
 
 		const dist = getdist(_connector)
 
-		isultrasonicBusy = false
+		isUltrasonicBusy = false
 		return dist
 	}
 

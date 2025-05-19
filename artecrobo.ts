@@ -193,7 +193,7 @@ namespace artecrobo {
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
 		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === connectorAnalogSensor[_connector]){
+			if(pinStates[i].name === connectorDigitalSensor[_connector]){
 				if(pinStates[i].state === 'LED'){
 					return true
 				}

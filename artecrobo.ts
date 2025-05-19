@@ -76,7 +76,19 @@ const pins = [
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
+	
+	function canUse(pin: string): boolean{
+		for(let i = 0;i< pins.length;i++){
+			if(pins[i].name === pin) return pins[i].state === 'idle'
+		}
+		return true
+	}
 
+	function setState(pin:string,state:string): void{
+		for(let i = 0;i< pins.length;i++){
+			if(pins[i].name === pin) pins[i].state === state
+		}
+	}
 
 
 	//% blockId=artec_light_sensor

@@ -205,7 +205,7 @@ namespace artecrobo {
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor){
 		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === connectorAnalogSensor[_connector]){
+			if(pinStates[i].name === connectorDigitalSensor[_connector]){
 				if(pinStates[i].state === 'LED') pins.digitalWritePin(_connector, 0);
 			}
 		}
@@ -217,7 +217,7 @@ namespace artecrobo {
 	//% group="LED"
 	export function ledLighting(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 1);
-		setState(connectorAnalogSensor[_connector],'idle')
+		setState(connectorDigitalSensor[_connector],'idle')
 	}
 
 

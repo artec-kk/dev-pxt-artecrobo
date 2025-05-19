@@ -69,6 +69,7 @@ const  pinStates = [
 		state:'idle'
 	}
 ]
+type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 /**
  * ArtecRobo control package
@@ -89,7 +90,18 @@ namespace artecrobo {
 			if(pinStates[i].name === pin) pinStates[i].state === state
 		}
 	}
-
+	
+	function getConnectorName(connector: AnyConnector): string {
+    switch (connector) {
+        case connectorDigitalSensor.P0: return "P0";
+        case connectorDigitalSensor.P1: return "P1";
+        case connectorDigitalSensor.P2: return "P2";
+        case connectorAnalogSensor.P0: return "P0";
+        case connectorAnalogSensor.P1: return "P1";
+        case connectorAnalogSensor.P2: return "P2";
+        default: return "unknown";
+    }
+}
 
 	//% blockId=artec_light_sensor
 	//% block="Light sensor pin %_connector"
@@ -192,8 +204,9 @@ namespace artecrobo {
 	//% block="LED point pin %_connector"
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
+		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === connectorDigitalSensor[_connector]){
+			if(pinStates[i].name === name){
 				if(pinStates[i].state === 'LED'){
 					return true
 				}
@@ -206,11 +219,12 @@ namespace artecrobo {
 	//% block="LED turn off pin %_connector"
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor){
+		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === connectorDigitalSensor[_connector]){
+			if(pinStates[i].name === name){
 				if(pinStates[i].state === 'LED') {
 					pins.digitalWritePin(_connector, 0);
-					setState(connectorDigitalSensor[_connector],'idle')
+					setState(name,'idle')
 				}
 			}
 		}
@@ -220,8 +234,9 @@ namespace artecrobo {
 	//% block="LED turn on pin %_connector"
 	//% group="LED"
 	export function ledLighting(_connector: connectorDigitalSensor){
+		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
-		setState(connectorDigitalSensor[_connector],'LED')
+		setState(name,'LED')
 	}
 
 

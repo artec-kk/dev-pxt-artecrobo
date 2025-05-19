@@ -192,19 +192,24 @@ namespace artecrobo {
 	//% block="LED point pin %_connector"
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
-		if(pins.digitalReadPin(_connector)){
-            pins.digitalWritePin(_connector,1);
-            return true;
-        }else{
-            return false;
-        }
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === connectorAnalogSensor[_connector]){
+				if(pinStates[i].state === 'LED') return true
+			}
+		}
+		return false
 	}
-	
+
 	//% blockId=artec_LED_off
 	//% block="LED turn off pin %_connector"
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor){
-		pins.digitalWritePin(_connector, 0);
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === connectorAnalogSensor[_connector]){
+				if(pinStates[i].state === 'LED') pins.digitalWritePin(_connector, 0);
+			}
+		}
+		setState(connectorAnalogSensor[_connector],'idle')
 	}
 
 	//% blockId=artec_LED_lighting
@@ -212,6 +217,7 @@ namespace artecrobo {
 	//% group="LED"
 	export function ledLighting(_connector: connectorDigitalSensor){
 		pins.digitalWritePin(_connector, 1);
+		setState(connectorAnalogSensor[_connector],'idle')
 	}
 
 

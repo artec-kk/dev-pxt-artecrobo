@@ -55,7 +55,7 @@ enum connectorDigitalSensor{
 	P2 = DigitalPin.P2
 }
 
-const pins = [
+const  pinStates = [
 	{
 		name:'P0',
 		state:'idle'
@@ -78,15 +78,15 @@ const pins = [
 namespace artecrobo {
 
 	function canUse(pin: string): boolean{
-		for(let i = 0;i< pins.length;i++){
-			if(pins[i].name === pin) return pins[i].state === 'idle'
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === pin) return pinStates[i].state === 'idle'
 		}
 		return false
 	}
 
 	function setState(pin:string,state:string): void{
-		for(let i = 0;i< pins.length;i++){
-			if(pins[i].name === pin) pins[i].state === state
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === pin) pinStates[i].state === state
 		}
 	}
 
@@ -199,7 +199,7 @@ namespace artecrobo {
             return false;
         }
 	}
-
+	
 	//% blockId=artec_LED_off
 	//% block="LED turn off pin %_connector"
 	//% group="LED"

@@ -210,7 +210,7 @@ namespace artecrobo {
 			if(pinStates[i].name === connectorDigitalSensor[_connector]){
 				if(pinStates[i].state === 'LED') {
 					pins.digitalWritePin(_connector, 0);
-					setState(connectorAnalogSensor[_connector],'idle')
+					setState(connectorDigitalSensor[_connector],'idle')
 				}
 			}
 		}

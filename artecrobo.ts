@@ -100,6 +100,8 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
+	let isultrasonicBusy = false
+
 	function getdist(_connector: connectorDigitalSensor): number{
 		pins.digitalWritePin(_connector, 0);
 		control.waitMicros(2);
@@ -109,7 +111,7 @@ namespace artecrobo {
 		const pulse_time = pins.pulseIn(_connector, PulseValue.High,20000);
 		const dist = pulse_time * 34000 / 1000000 /2;
 		pins.digitalWritePin(_connector, 0);
-		basic.pause(100);
+		basic.pause(10);
 		return dist;
 	}
 
@@ -117,7 +119,14 @@ namespace artecrobo {
 	//% block="Ultrasonic sensor pin %_connector"
 	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
+		while(isultrasonicBusy){
+			basic.pause(5)
+		}
+		isultrasonicBusy = true
+
 		const dist = getdist(_connector)
+
+		isultrasonicBusy = false
 		return dist
 	}
 

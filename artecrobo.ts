@@ -81,7 +81,7 @@ namespace artecrobo {
 		for(let i = 0;i< pins.length;i++){
 			if(pins[i].name === pin) return pins[i].state === 'idle'
 		}
-		return true
+		return false
 	}
 
 	function setState(pin:string,state:string): void{

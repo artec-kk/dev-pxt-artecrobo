@@ -55,6 +55,20 @@ enum connectorDigitalSensor{
 	P2 = DigitalPin.P2
 }
 
+const pins = [
+	{
+		name:'P0',
+		state:'idle'
+	},
+	{
+		name:'P1',
+		state:'idle'
+	},
+	{
+		name:'P2',
+		state:'idle'
+	}
+]
 
 /**
  * ArtecRobo control package
@@ -62,6 +76,7 @@ enum connectorDigitalSensor{
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
+
 
 
 	//% blockId=artec_light_sensor

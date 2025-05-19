@@ -100,11 +100,7 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
-
-	//% blockId=artec_ultrasonic_sensor
-	//% block="Ultrasonic sensor pin %_connector"
-	//% group="Sensor"
-	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
+	function getdist(_connector: connectorDigitalSensor): number{
 		pins.digitalWritePin(_connector, 0);
 		control.waitMicros(2);
 		pins.digitalWritePin(_connector, 1);
@@ -115,6 +111,14 @@ namespace artecrobo {
 		pins.digitalWritePin(_connector, 0);
 		basic.pause(100);
 		return dist;
+	}
+
+	//% blockId=artec_ultrasonic_sensor
+	//% block="Ultrasonic sensor pin %_connector"
+	//% group="Sensor"
+	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
+		const dist = getdist(_connector)
+		return dist
 	}
 
 

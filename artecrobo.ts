@@ -55,7 +55,17 @@ enum connectorDigitalSensor{
 	P2 = DigitalPin.P2
 }
 
-const  pinStates = [
+
+
+
+/**
+ * ArtecRobo control package
+ */
+//% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
+//% groups="['Motor', 'Sensor', 'LED', 'Sound']"
+namespace artecrobo {
+
+	const  pinStates = [
 	{
 		name:'P0',
 		state:'idle'
@@ -69,14 +79,7 @@ const  pinStates = [
 		state:'idle'
 	}
 ]
-type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
-
-/**
- * ArtecRobo control package
- */
-//% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
-//% groups="['Motor', 'Sensor', 'LED', 'Sound']"
-namespace artecrobo {
+	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function canUse(pin: string): boolean{
 		for(let i = 0;i< pinStates.length;i++){

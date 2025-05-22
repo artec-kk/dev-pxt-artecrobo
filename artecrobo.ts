@@ -90,7 +90,7 @@ namespace artecrobo {
 
 	function setState(pin:string,state:string): void{
 		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === pin) pinStates[i].state === state
+			if(pinStates[i].name === pin) pinStates[i].state = state
 		}
 	}
 	

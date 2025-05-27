@@ -64,26 +64,26 @@ enum connectorDigitalSensor{
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
-type DeviceState = 'idle' | 'active' | 'error';
+	type DeviceState = 'idle' | 'active' | 'error';
 
-interface pinconnector {
-	name: string;
-	state: {
-		led: DeviceState;
-		buzzer: DeviceState;
-		body_buzzer: DeviceState;
-	};
-}
+	interface pinconnector {
+		name: string;
+		state: {
+			led: DeviceState;
+			buzzer: DeviceState;
+			body_buzzer: DeviceState;
+		};
+	}
 
-const defaultState: pinconnector["state"] = { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' };
+	const defaultState: pinconnector["state"] = { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' };
 
-const pinStates:pinconnector[] = [
-	{ name: 'P0', state: { ...defaultState } },
-	{ name: 'P1', state: { ...defaultState } },
-	{ name: 'P2', state: { ...defaultState } }
-];
-type StateKey = keyof pinconnector['state'];
-type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
+	const pinStates:pinconnector[] = [
+		{ name: 'P0', state: { ...defaultState } },
+		{ name: 'P1', state: { ...defaultState } },
+		{ name: 'P2', state: { ...defaultState } }
+	];
+	type StateKey = keyof pinconnector['state'];
+	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function canUse(pin: string,prop:StateKey): boolean{
 			pinStates.forEach((elm) => {
@@ -95,7 +95,7 @@ type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function setState(pin:string,prop:StateKey,state:DeviceState): void{
 		pinStates.forEach((elm) => {
-			if(elm.name === pin) return elm.state[prop] = state
+			if(elm.name === pin) elm.state[prop] = state
 		}
 	)
 	}

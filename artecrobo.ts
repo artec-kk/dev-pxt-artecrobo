@@ -86,18 +86,16 @@ namespace artecrobo {
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function canUse(pin: string, prop: StateKey): boolean {
-		pinStates.forEach((elm) => {
-			if (elm.name === pin) return elm.state[prop] === 'idle';
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === pin) return pinStates[i].state[prop] === 'idle'
 		}
-		)
-		return false;
+		return false
 	}
 
 	function setState(pin: string, prop: StateKey, state: DeviceState): void {
-		pinStates.forEach((elm) => {
-			if (elm.name === pin) elm.state[prop] = state;
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === pin) pinStates[i].state[prop] = state
 		}
-		)
 	}
 
 	function getConnectorName(connector: AnyConnector): string {
@@ -214,9 +212,13 @@ namespace artecrobo {
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
-		pinStates.forEach((elm) => {
-			if (elm.name === name) return elm.state.led === 'active'
-		})
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === name){
+				if(pinStates[i].state.led === 'active'){
+					return true
+				}
+			}
+		}
 		return false
 	}
 
@@ -225,12 +227,14 @@ namespace artecrobo {
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
-		pinStates.forEach((elm) => {
-			if (elm.name === name && elm.state.led === 'active') {
-				pins.digitalWritePin(_connector, 0);
-				setState(name, 'led', 'idle')
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === name){
+				if(pinStates[i].state.led === 'active') {
+					pins.digitalWritePin(_connector, 0);
+					setState(name,"led",'idle')
+				}
 			}
-		})
+		}
 	}
 
 	//% blockId=artec_LED_lighting
@@ -253,9 +257,9 @@ namespace artecrobo {
 	//% group="Sound"
 	export function isSound(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
-		pinStates.forEach((elm) => {
-			if (elm.name === name) return elm.state.buzzer === 'active'
-		})
+		for(let i = 0;i< pinStates.length;i++){
+			if (pinStates[i].name === name) return pinStates[i].state.buzzer === 'active'
+		}
 		return false
 	}
 
@@ -266,9 +270,9 @@ namespace artecrobo {
 		pins.setAudioPin(_connector);
 		music.stopAllSounds();
 		const name = getConnectorName(_connector);
-		pinStates.forEach((elm) => {
-			if (elm.name === name) elm.state.buzzer = 'idle'
-		})
+		for(let i = 0;i< pinStates.length;i++){
+			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'idle'
+		}
 		music.setBuiltInSpeakerEnabled(true);
 	}
 
@@ -281,9 +285,9 @@ namespace artecrobo {
 		music.setBuiltInSpeakerEnabled(false);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector)
-		pinStates.forEach((elm) => {
-			if (elm.name === name) elm.state.buzzer = 'active'
-		})
+		for(let i = 0;i< pinStates.length;i++){
+			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'active'
+		}
 	}
 
 	//% blockId=artec_stop_sound_both
@@ -293,12 +297,12 @@ namespace artecrobo {
 		pins.setAudioPin(_connector);
 		music.stopAllSounds();
 		const name = getConnectorName(_connector)
-		pinStates.forEach((elm) => {
-			if (elm.name === name) {
-				elm.state.buzzer = 'idle'
-				elm.state.body_buzzer = 'idle'
+		for(let i = 0;i< pinStates.length;i++){
+			if (pinStates[i].name === name) {
+				pinStates[i].state.buzzer = 'idle'
+				pinStates[i].state.body_buzzer = 'idle'
 			}
-		})
+		}
 	}
 
 	//% blockId=artec_make_sound_both
@@ -309,12 +313,12 @@ namespace artecrobo {
 		pins.setAudioPin(_connector);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector)
-		pinStates.forEach((elm) => {
-			if (elm.name === name) {
-				elm.state.buzzer = 'active'
-				elm.state.body_buzzer = 'active'
+		for(let i = 0;i< pinStates.length;i++){
+			if (pinStates[i].name === name) {
+				pinStates[i].state.buzzer = 'active'
+				pinStates[i].state.body_buzzer = 'active'
 			}
-		})
+		}
 	}
 
 

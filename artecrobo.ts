@@ -260,8 +260,7 @@ const pinStates: pinconnector[] = [
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
 	export function stopSound(_connector: connectorDigitalSensor) {
-		pins.setAudioPin(_connector);
-		music.stopAllSounds();
+		pins.analogWritePin(_connector,0);
 		const name = getConnectorName(_connector);
 		for(let i = 0;i< pinStates.length;i++){
 			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'idle'
@@ -274,9 +273,9 @@ const pinStates: pinconnector[] = [
 	//% _note.shadow="device_note"
 	//% group="Sound"
 	export function makeSound(_connector: connectorDigitalSensor, _note: number) {
-		pins.setAudioPin(_connector);
-		music.setBuiltInSpeakerEnabled(false);
-		music.ringTone(_note);
+		const periodus = 1000000 / _note;
+		pins.analogSetPeriod(_connector,periodus);
+		pins.analogWritePin(_connector, 512);
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
 			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'active'

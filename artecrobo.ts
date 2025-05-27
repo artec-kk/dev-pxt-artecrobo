@@ -19,7 +19,7 @@ enum connectorDCMotor {
 	M2
 }
 
-enum connectorTouchSensor{
+enum connectorTouchSensor {
 	//% block="A"
 	A,
 	//% block="B"
@@ -37,7 +37,7 @@ enum connectorServoMotor {
 
 
 
-enum connectorAnalogSensor{
+enum connectorAnalogSensor {
 	//% block="P0"
 	P0 = AnalogPin.P0,
 	//% block="P1"
@@ -46,7 +46,7 @@ enum connectorAnalogSensor{
 	P2 = AnalogPin.P2
 }
 
-enum connectorDigitalSensor{
+enum connectorDigitalSensor {
 	//% block="P0"
 	P0 = DigitalPin.P0,
 	//% block="P1"
@@ -73,11 +73,11 @@ namespace artecrobo {
 			buzzer: DeviceState;
 			body_buzzer: DeviceState;
 		};
-	}
+	};
 
 	const defaultState: pinconnector["state"] = { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' };
 
-	const pinStates:pinconnector[] = [
+	const pinStates: pinconnector[] = [
 		{ name: 'P0', state: { ...defaultState } },
 		{ name: 'P1', state: { ...defaultState } },
 		{ name: 'P2', state: { ...defaultState } }
@@ -85,32 +85,32 @@ namespace artecrobo {
 	type StateKey = keyof pinconnector['state'];
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
-	function canUse(pin: string,prop:StateKey): boolean{
-			pinStates.forEach((elm) => {
-				if(elm.name === pin) return elm.state[prop] === 'idle'
+	function canUse(pin: string, prop: StateKey): boolean {
+		pinStates.forEach((elm) => {
+			if (elm.name === pin) return elm.state[prop] === 'idle';
 		}
-	)
-		return false
+		)
+		return false;
 	}
 
-	function setState(pin:string,prop:StateKey,state:DeviceState): void{
+	function setState(pin: string, prop: StateKey, state: DeviceState): void {
 		pinStates.forEach((elm) => {
-			if(elm.name === pin) elm.state[prop] = state
+			if (elm.name === pin) elm.state[prop] = state;
 		}
-	)
+		)
 	}
-	
+
 	function getConnectorName(connector: AnyConnector): string {
-    switch (connector) {
-        case connectorDigitalSensor.P0: return "P0";
-        case connectorDigitalSensor.P1: return "P1";
-        case connectorDigitalSensor.P2: return "P2";
-        case connectorAnalogSensor.P0: return "P0";
-        case connectorAnalogSensor.P1: return "P1";
-        case connectorAnalogSensor.P2: return "P2";
-        default: return "unknown";
-    }
-}
+		switch (connector) {
+			case connectorDigitalSensor.P0: return "P0";
+			case connectorDigitalSensor.P1: return "P1";
+			case connectorDigitalSensor.P2: return "P2";
+			case connectorAnalogSensor.P0: return "P0";
+			case connectorAnalogSensor.P1: return "P1";
+			case connectorAnalogSensor.P2: return "P2";
+			default: return "unknown";
+		}
+	}
 
 	//% blockId=artec_light_sensor
 	//% block="Light sensor pin %_connector"
@@ -150,14 +150,14 @@ namespace artecrobo {
 
 	let isUltrasonicBusy = false
 
-	function getdist(_connector: connectorDigitalSensor): number{
+	function getdist(_connector: connectorDigitalSensor): number {
 		pins.digitalWritePin(_connector, 0);
 		control.waitMicros(2);
 		pins.digitalWritePin(_connector, 1);
 		control.waitMicros(10)
 		pins.digitalWritePin(_connector, 0);
-		const pulse_time = pins.pulseIn(_connector, PulseValue.High,20000);
-		const dist = pulse_time * 34000 / 1000000 /2;
+		const pulse_time = pins.pulseIn(_connector, PulseValue.High, 20000);
+		const dist = pulse_time * 34000 / 1000000 / 2;
 		pins.digitalWritePin(_connector, 0);
 		basic.pause(10);
 		return dist;
@@ -167,7 +167,7 @@ namespace artecrobo {
 	//% block="Ultrasonic sensor pin %_connector"
 	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
-		while(isUltrasonicBusy){
+		while (isUltrasonicBusy) {
 			basic.pause(5)
 		}
 		isUltrasonicBusy = true
@@ -183,12 +183,12 @@ namespace artecrobo {
 	//% block="touch sensor pin %_connector"
 	//% group="Sensor"
 	export function touchSensor(_connector: connectorTouchSensor): boolean {
-		switch(_connector){
+		switch (_connector) {
 			case connectorTouchSensor.A:
-				if(pins.digitalReadPin(DigitalPin.P5) == 0) return true;
+				if (pins.digitalReadPin(DigitalPin.P5) == 0) return true;
 				return false;
 			case connectorTouchSensor.B:
-				if(pins.digitalReadPin(DigitalPin.P11) == 0) return true;
+				if (pins.digitalReadPin(DigitalPin.P11) == 0) return true;
 				return false;
 			default:
 				return false;
@@ -198,24 +198,24 @@ namespace artecrobo {
 	//% blockId=artec_on_touchsensor
 	//% block="on pressed Touch Sensor pin $_connector"
 	//% group="Sensor"
-    export function onTouchSensor(_connector: connectorTouchSensor, handler: () => void) {
-        switch(_connector){
+	export function onTouchSensor(_connector: connectorTouchSensor, handler: () => void) {
+		switch (_connector) {
 			case connectorTouchSensor.A:
 				input.onButtonPressed(Button.A, handler);
 				break;
 			case connectorTouchSensor.B:
-				input.onButtonPressed(Button.B,handler);
+				input.onButtonPressed(Button.B, handler);
 				break;
-			}
+		}
 	}
 
 	//% blockkId=artec_is_led_lighting
 	//% block="LED point pin %_connector"
 	//% group="LED"
-	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
+	export function isLEDLighting(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name) return elm.state.led === 'active'
+			if (elm.name === name) return elm.state.led === 'active'
 		})
 		return false
 	}
@@ -223,23 +223,23 @@ namespace artecrobo {
 	//% blockId=artec_LED_off
 	//% block="LED turn off pin %_connector"
 	//% group="LED"
-	export function ledOff(_connector: connectorDigitalSensor){
+	export function ledOff(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name && elm.state.led === 'active'){
-					pins.digitalWritePin(_connector, 0);
-					setState(name,'led','idle')
-				}
+			if (elm.name === name && elm.state.led === 'active') {
+				pins.digitalWritePin(_connector, 0);
+				setState(name, 'led', 'idle')
+			}
 		})
 	}
 
 	//% blockId=artec_LED_lighting
 	//% block="LED turn on pin %_connector"
 	//% group="LED"
-	export function ledLighting(_connector: connectorDigitalSensor){
+	export function ledLighting(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
-		setState(name,'led','active')
+		setState(name, 'led', 'active')
 	}
 
 
@@ -251,10 +251,10 @@ namespace artecrobo {
 	//% blockId=artec_issoundplay
 	//% block="is Sound play pin %_connector"
 	//% group="Sound"
-	export function isSound(_connector: connectorDigitalSensor): boolean{
+	export function isSound(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name) return elm.state.buzzer === 'active'
+			if (elm.name === name) return elm.state.buzzer === 'active'
 		})
 		return false
 	}
@@ -262,39 +262,39 @@ namespace artecrobo {
 	//% blockId=artec_stop_sound
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
-	export function stopSound(_connector: connectorDigitalSensor){
+	export function stopSound(_connector: connectorDigitalSensor) {
 		pins.setAudioPin(_connector);
 		music.stopAllSounds();
 		const name = getConnectorName(_connector);
 		pinStates.forEach((elm) => {
-			if(elm.name === name) elm.state.buzzer = 'idle'
+			if (elm.name === name) elm.state.buzzer = 'idle'
 		})
 		music.setBuiltInSpeakerEnabled(true);
 	}
 
-    //% blockId=artec_make_sound
+	//% blockId=artec_make_sound
 	//% block="Sound play pin %_connector Hz %_note"
-    //% _note.shadow="device_note"
+	//% _note.shadow="device_note"
 	//% group="Sound"
-	export function makeSound(_connector: connectorDigitalSensor,_note: number){
+	export function makeSound(_connector: connectorDigitalSensor, _note: number) {
 		pins.setAudioPin(_connector);
 		music.setBuiltInSpeakerEnabled(false);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name) elm.state.buzzer = 'active'
+			if (elm.name === name) elm.state.buzzer = 'active'
 		})
 	}
 
 	//% blockId=artec_stop_sound_both
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
-	export function stopSound_both(_connector: connectorDigitalSensor){
+	export function stopSound_both(_connector: connectorDigitalSensor) {
 		pins.setAudioPin(_connector);
 		music.stopAllSounds();
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name){
+			if (elm.name === name) {
 				elm.state.buzzer = 'idle'
 				elm.state.body_buzzer = 'idle'
 			}
@@ -303,14 +303,14 @@ namespace artecrobo {
 
 	//% blockId=artec_make_sound_both
 	//% block="Sound play pin %_connector Hz %_note"
-    //% _note.shadow="device_note"
+	//% _note.shadow="device_note"
 	//% group="Sound"
-	export function makeSound_both(_connector: connectorDigitalSensor,_note: number){
+	export function makeSound_both(_connector: connectorDigitalSensor, _note: number) {
 		pins.setAudioPin(_connector);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name){
+			if (elm.name === name) {
 				elm.state.buzzer = 'active'
 				elm.state.body_buzzer = 'active'
 			}
@@ -332,8 +332,8 @@ namespace artecrobo {
 	//% _angle.min=0 _angle.max=180
 	//% group="Motor"
 	export function moveServoMotorMax(_connector: connectorServoMotor, _angle: number): void {
-		if (_angle < 0)		{ _angle = 0; }
-		if (_angle > 180)	{ _angle = 180; }
+		if (_angle < 0) { _angle = 0; }
+		if (_angle > 180) { _angle = 180; }
 		switch (_connector) {
 			case connectorServoMotor.P13:
 				pins.servoWritePin(AnalogPin.P13, _angle);
@@ -358,10 +358,10 @@ namespace artecrobo {
 	//% _speed.min=0 _speed.max=20
 	//% group="Motor"
 	export function moveServoMotor(_connector: connectorServoMotor, _angle: number, _speed: number): void {
-		if (_speed < 1)		{ _speed = 1; }
-		if (_speed > 20)	{ _speed = 20; }
-		if (_angle < 0)		{ _angle = 0; }
-		if (_angle > 180)	{ _angle = 180; }
+		if (_speed < 1) { _speed = 1; }
+		if (_speed > 20) { _speed = 20; }
+		if (_angle < 0) { _angle = 0; }
+		if (_angle > 180) { _angle = 180; }
 		switch (_connector) {
 			case connectorServoMotor.P13:
 				moveservo(AnalogPin.P13, angleP13, _angle, _speed);
@@ -380,16 +380,16 @@ namespace artecrobo {
 		}
 	}
 
-	function moveservo (_pin: AnalogPin, _FromAngle: number, _ToAngle: number, _speed: number): void {
-		const diff = Math.abs(_ToAngle - _FromAngle );
+	function moveservo(_pin: AnalogPin, _FromAngle: number, _ToAngle: number, _speed: number): void {
+		const diff = Math.abs(_ToAngle - _FromAngle);
 		if (diff == 0) return;
 
 		const interval = Math.abs(_speed - 20) + 3;
 		let dir = 1;
-		if(_ToAngle - _FromAngle < 0) {
+		if (_ToAngle - _FromAngle < 0) {
 			dir = -1;
 		}
-		for(let i = 1; i <= diff; i++ ) {
+		for (let i = 1; i <= diff; i++) {
 			_FromAngle = _FromAngle + dir;
 			pins.servoWritePin(_pin, _FromAngle);
 			basic.pause(interval);
@@ -411,29 +411,29 @@ namespace artecrobo {
 	//% _angle13.min=0 _angle13.max=180
 	//% _angle14.min=0 _angle14.max=180
 	//% _angle15.min=0 _angle15.max=180
-	export function AsyncMoveServoMotor(_speed: number,  _angle13: number,  _angle14: number, _angle15: number): void {
-		if (_speed < 0)		{ _speed = 0; }
-		if (_speed > 20)	{ _speed = 20; }
-		if (_angle13 < 0)	{ _angle13 = 0; }
-		if (_angle13 > 180)	{ _angle13 = 180; }
-		if (_angle14 < 0)	{ _angle14 = 0; }
-		if (_angle14 > 180)	{ _angle14 = 180; }
-		if (_angle15 < 0)	{ _angle15 = 0; }
-		if (_angle15 > 180)	{ _angle15 = 180; }
+	export function AsyncMoveServoMotor(_speed: number, _angle13: number, _angle14: number, _angle15: number): void {
+		if (_speed < 0) { _speed = 0; }
+		if (_speed > 20) { _speed = 20; }
+		if (_angle13 < 0) { _angle13 = 0; }
+		if (_angle13 > 180) { _angle13 = 180; }
+		if (_angle14 < 0) { _angle14 = 0; }
+		if (_angle14 > 180) { _angle14 = 180; }
+		if (_angle15 < 0) { _angle15 = 0; }
+		if (_angle15 > 180) { _angle15 = 180; }
 		const interval = Math.abs(_speed - 20) + 3;
 		// サーボモーターを動かす方向
 		let dirP13 = 1;
-		if(_angle13 - angleP13 < 0) {
+		if (_angle13 - angleP13 < 0) {
 			dirP13 = -1;
 		}
 
 		let dirP14 = 1;
-		if(_angle14 - angleP14 < 0) {
+		if (_angle14 - angleP14 < 0) {
 			dirP14 = -1;
 		}
 
 		let dirP15 = 1;
-		if(_angle15 - angleP15 < 0) {
+		if (_angle15 - angleP15 < 0) {
 			dirP15 = -1;
 		}
 
@@ -458,21 +458,21 @@ namespace artecrobo {
 			divideP15 = maxData / diffP15;  // 1度変化させる間隔
 		}
 
-		for(let i = 1; i <= maxData; i++ ) {
+		for (let i = 1; i <= maxData; i++) {
 			if (diffP13 != 0) {
-				if( i % divideP13 == 0 ){
+				if (i % divideP13 == 0) {
 					angleP13 = angleP13 + dirP13;
 					pins.servoWritePin(AnalogPin.P13, angleP13);
 				}
 			}
 			if (diffP14 != 0) {
-				if( i % divideP14 == 0 ){
+				if (i % divideP14 == 0) {
 					angleP14 = angleP14 + dirP14;
 					pins.servoWritePin(AnalogPin.P14, angleP14);
 				}
 			}
 			if (diffP15 != 0) {
-				if( i % divideP15 == 0 ){
+				if (i % divideP15 == 0) {
 					angleP15 = angleP15 + dirP15;
 					pins.servoWritePin(AnalogPin.P15, angleP15);
 				}
@@ -488,18 +488,18 @@ namespace artecrobo {
 		if (diffP15 != 0) pins.servoWritePin(AnalogPin.P15, angleP15);
 	}
 
-		/* spped initial value */
-		let speedM1 = 1023;
-		let speedM2 = 1023;
-		let state = DCmotion.Brake;
+	/* spped initial value */
+	let speedM1 = 1023;
+	let speedM2 = 1023;
+	let state = DCmotion.Brake;
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"
 	//% _speed.min=0 _speed.max=1023
 	//% group="Motor"
 	export function setSpeedDCMotor(_connector: connectorDCMotor, _speed: number): void {
-		if (_speed < 0)		{ _speed = 0; }
-		if (_speed > 1023)	{ _speed = 1023; }
+		if (_speed < 0) { _speed = 0; }
+		if (_speed > 1023) { _speed = 1023; }
 		if (_connector == connectorDCMotor.M1) {
 			speedM1 = 1023 - _speed;
 		} else {
@@ -515,7 +515,7 @@ namespace artecrobo {
 	//% block="DC motor %_connector| motion: %_motion"
 	//% group="Motor"
 	export function moveDCMotor(_connector: connectorDCMotor, _motion: DCmotion): void {
-		switch(_motion) {
+		switch (_motion) {
 			case DCmotion.Forward:
 				/*
 					Move Forward

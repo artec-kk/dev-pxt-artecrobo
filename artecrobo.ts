@@ -74,14 +74,12 @@ namespace artecrobo {
 			body_buzzer: DeviceState;
 		};
 	};
-
-	const defaultState: pinconnector["state"] = { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' };
-
-	const pinStates: pinconnector[] = [
-		{ name: 'P0', state: { ...defaultState } },
-		{ name: 'P1', state: { ...defaultState } },
-		{ name: 'P2', state: { ...defaultState } }
-	];
+	
+const pinStates: pinconnector[] = [
+	{ name: 'P0', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } },
+	{ name: 'P1', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } },
+	{ name: 'P2', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } }
+];
 	type StateKey = keyof pinconnector['state'];
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 

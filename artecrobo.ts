@@ -82,16 +82,18 @@ namespace artecrobo {
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function canUse(pin: string): boolean{
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === pin) return pinStates[i].state === 'idle'
+			pinStates.forEach((elm) => {
+				if(elm.name === pin) return elm.state === 'idle'
 		}
+	)
 		return false
 	}
 
 	function setState(pin:string,state:string): void{
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === pin) pinStates[i].state = state
+		pinStates.forEach((elm) => {
+				if(elm.name === pin) return elm.state = state
 		}
+	)
 	}
 	
 	function getConnectorName(connector: AnyConnector): string {
@@ -208,13 +210,9 @@ namespace artecrobo {
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === name){
-				if(pinStates[i].state === 'LED'){
-					return true
-				}
-			}
-		}
+		pinStates.forEach((elm) => {
+			if(elm.name === name) return elm.state === 'LED'
+		})
 		return false
 	}
 
@@ -223,16 +221,12 @@ namespace artecrobo {
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor){
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
-			console.log(pinStates[i].name)
-			if(pinStates[i].name === name){
-				console.log(pinStates[i].state)
-				if(pinStates[i].state === 'LED') {
+		pinStates.forEach((elm) => {
+			if(elm.name === name && elm.state === 'LED'){
 					pins.digitalWritePin(_connector, 0);
 					setState(name,'idle')
 				}
-			}
-		}
+		})
 	}
 
 	//% blockId=artec_LED_lighting

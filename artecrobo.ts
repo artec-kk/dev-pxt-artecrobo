@@ -74,7 +74,7 @@ namespace artecrobo {
 			body_buzzer: DeviceState;
 		};
 	};
-	
+
 const pinStates: pinconnector[] = [
 	{ name: 'P0', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } },
 	{ name: 'P1', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } },
@@ -244,11 +244,6 @@ const pinStates: pinconnector[] = [
 		setState(name, 'led', 'active')
 	}
 
-
-
-	let isplay_P0 = false;
-	let isplay_P1 = false;
-	let isplay_P2 = false;
 
 	//% blockId=artec_issoundplay
 	//% block="is Sound play pin %_connector"

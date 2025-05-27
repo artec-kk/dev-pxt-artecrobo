@@ -274,11 +274,11 @@ const pinStates: pinconnector[] = [
 	//% group="Sound"
 	export function makeSound(_connector: connectorDigitalSensor, _note: number) {
 		const periodus = 1000000 / _note;
-		pins.analogSetPeriod(_connector,periodus);
 		pins.analogWritePin(_connector, 512);
-		const name = getConnectorName(_connector)
+		pins.analogSetPeriod(_connector,periodus);
+		const name = getConnectorName(_connector);
 		for(let i = 0;i< pinStates.length;i++){
-			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'active'
+			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'active';
 		}
 	}
 

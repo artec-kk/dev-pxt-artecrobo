@@ -64,34 +64,38 @@ enum connectorDigitalSensor{
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
+type DeviceState = 'idle' | 'active' | 'error';
 
-	const  pinStates = [
-	{
-		name:'P0',
-		state:'idle'
-	},
-	{
-		name:'P1',
-		state:'idle'
-	},
-	{
-		name:'P2',
-		state:'idle'
-	}
-]
-	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
+interface pinconnector {
+	name: string;
+	state: {
+		led: DeviceState;
+		buzzer: DeviceState;
+		body_buzzer: DeviceState;
+	};
+}
 
-	function canUse(pin: string): boolean{
+const defaultState: pinconnector["state"] = { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' };
+
+const pinStates:pinconnector[] = [
+	{ name: 'P0', state: { ...defaultState } },
+	{ name: 'P1', state: { ...defaultState } },
+	{ name: 'P2', state: { ...defaultState } }
+];
+type StateKey = keyof pinconnector['state'];
+type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
+
+	function canUse(pin: string,prop:StateKey): boolean{
 			pinStates.forEach((elm) => {
-				if(elm.name === pin) return elm.state === 'idle'
+				if(elm.name === pin) return elm.state[prop] === 'idle'
 		}
 	)
 		return false
 	}
 
-	function setState(pin:string,state:string): void{
+	function setState(pin:string,prop:StateKey,state:DeviceState): void{
 		pinStates.forEach((elm) => {
-				if(elm.name === pin) return elm.state = state
+			if(elm.name === pin) return elm.state[prop] = state
 		}
 	)
 	}
@@ -211,7 +215,7 @@ namespace artecrobo {
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean{
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name) return elm.state === 'LED'
+			if(elm.name === name) return elm.state.led === 'active'
 		})
 		return false
 	}
@@ -222,9 +226,9 @@ namespace artecrobo {
 	export function ledOff(_connector: connectorDigitalSensor){
 		const name = getConnectorName(_connector)
 		pinStates.forEach((elm) => {
-			if(elm.name === name && elm.state === 'LED'){
+			if(elm.name === name && elm.state.led === 'active'){
 					pins.digitalWritePin(_connector, 0);
-					setState(name,'idle')
+					setState(name,'led','idle')
 				}
 		})
 	}
@@ -235,7 +239,7 @@ namespace artecrobo {
 	export function ledLighting(_connector: connectorDigitalSensor){
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
-		setState(name,'LED')
+		setState(name,'led','active')
 	}
 
 
@@ -248,16 +252,11 @@ namespace artecrobo {
 	//% block="is Sound play pin %_connector"
 	//% group="Sound"
 	export function isSound(_connector: connectorDigitalSensor): boolean{
-		switch(_connector){
-			case connectorDigitalSensor.P0:
-				return isplay_P0;
-			case connectorDigitalSensor.P1:
-				return isplay_P1;
-			case connectorDigitalSensor.P2:
-				return isplay_P2;
-			default:
-				return false;
-		}
+		const name = getConnectorName(_connector)
+		pinStates.forEach((elm) => {
+			if(elm.name === name) return elm.state.buzzer === 'active'
+		})
+		return false
 	}
 
 	//% blockId=artec_stop_sound
@@ -266,17 +265,10 @@ namespace artecrobo {
 	export function stopSound(_connector: connectorDigitalSensor){
 		pins.setAudioPin(_connector);
 		music.stopAllSounds();
-		switch(_connector){
-			case connectorDigitalSensor.P0:
-				isplay_P0 = false;
-				break;
-			case connectorDigitalSensor.P1:
-				isplay_P1 = false;
-				break;
-			case connectorDigitalSensor.P2:
-				isplay_P2 = false;
-				break;
-		}
+		const name = getConnectorName(_connector);
+		pinStates.forEach((elm) => {
+			if(elm.name === name) elm.state.buzzer = 'idle'
+		})
 		music.setBuiltInSpeakerEnabled(true);
 	}
 
@@ -288,17 +280,10 @@ namespace artecrobo {
 		pins.setAudioPin(_connector);
 		music.setBuiltInSpeakerEnabled(false);
 		music.ringTone(_note);
-		switch(_connector){
-			case connectorDigitalSensor.P0:
-				isplay_P0 = true;
-				break;
-			case connectorDigitalSensor.P1:
-				isplay_P1 = true;
-				break;
-			case connectorDigitalSensor.P2:
-				isplay_P2 = true;
-				break;
-		}
+		const name = getConnectorName(_connector)
+		pinStates.forEach((elm) => {
+			if(elm.name === name) elm.state.buzzer = 'active'
+		})
 	}
 
 	//% blockId=artec_stop_sound_both
@@ -307,17 +292,13 @@ namespace artecrobo {
 	export function stopSound_both(_connector: connectorDigitalSensor){
 		pins.setAudioPin(_connector);
 		music.stopAllSounds();
-		switch(_connector){
-			case connectorDigitalSensor.P0:
-				isplay_P0 = false;
-				break;
-			case connectorDigitalSensor.P1:
-				isplay_P1 = false;
-				break;
-			case connectorDigitalSensor.P2:
-				isplay_P2 = false;
-				break;
-		}
+		const name = getConnectorName(_connector)
+		pinStates.forEach((elm) => {
+			if(elm.name === name){
+				elm.state.buzzer = 'idle'
+				elm.state.body_buzzer = 'idle'
+			}
+		})
 	}
 
 	//% blockId=artec_make_sound_both
@@ -327,17 +308,13 @@ namespace artecrobo {
 	export function makeSound_both(_connector: connectorDigitalSensor,_note: number){
 		pins.setAudioPin(_connector);
 		music.ringTone(_note);
-		switch(_connector){
-			case connectorDigitalSensor.P0:
-				isplay_P0 = true;
-				break;
-			case connectorDigitalSensor.P1:
-				isplay_P1 = true;
-				break;
-			case connectorDigitalSensor.P2:
-				isplay_P2 = true;
-				break;
-		}
+		const name = getConnectorName(_connector)
+		pinStates.forEach((elm) => {
+			if(elm.name === name){
+				elm.state.buzzer = 'active'
+				elm.state.body_buzzer = 'active'
+			}
+		})
 	}
 
 

@@ -64,28 +64,29 @@ enum connectorDigitalSensor {
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
-	type DeviceState = 'idle' | 'active' | 'error';
+	type DeviceState =
+		| { kind: 'idle' }
+		| { kind: 'active'; periodus: number;};
 
 	interface pinconnector {
 		name: string;
 		state: {
 			led: DeviceState;
 			buzzer: DeviceState;
-			body_buzzer: DeviceState;
 		};
 	};
 
 const pinStates: pinconnector[] = [
-	{ name: 'P0', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } },
-	{ name: 'P1', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } },
-	{ name: 'P2', state: { led: 'idle', buzzer: 'idle', body_buzzer: 'idle' } }
+	{ name: 'P0', state: { led: {kind:'idle'}, buzzer: {kind:'idle'}}},
+	{ name: 'P1', state: { led: {kind:'idle'}, buzzer: {kind:'idle'}}},
+	{ name: 'P2', state: { led: {kind:'idle'}, buzzer: {kind:'idle'}}}
 ];
 	type StateKey = keyof pinconnector['state'];
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function canUse(pin: string, prop: StateKey): boolean {
 		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === pin) return pinStates[i].state[prop] === 'idle'
+			if(pinStates[i].name === pin) return pinStates[i].state[prop].kind === 'idle'
 		}
 		return false
 	}
@@ -212,7 +213,7 @@ const pinStates: pinconnector[] = [
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
 			if(pinStates[i].name === name){
-				if(pinStates[i].state.led === 'active'){
+				if(pinStates[i].state.led.kind === 'active'){
 					return true
 				}
 			}
@@ -227,9 +228,9 @@ const pinStates: pinconnector[] = [
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
 			if(pinStates[i].name === name){
-				if(pinStates[i].state.led === 'active') {
+				if(pinStates[i].state.led.kind === 'active') {
 					pins.digitalWritePin(_connector, 0);
-					setState(name,"led",'idle')
+					pinStates[i].state.led.kind = 'idle'
 				}
 			}
 		}
@@ -241,9 +242,14 @@ const pinStates: pinconnector[] = [
 	export function ledLighting(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
-		setState(name, 'led', 'active')
+		for(let i = 0;i< pinStates.length;i++){
+			if(pinStates[i].name === name){
+				if(pinStates[i].state.led.kind === 'idle') {
+					pinStates[i].state.led.kind = 'active'
+				}
+			}
+		}
 	}
-
 
 	//% blockId=artec_issoundplay
 	//% block="is Sound play pin %_connector"
@@ -251,7 +257,7 @@ const pinStates: pinconnector[] = [
 	export function isSound(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
-			if (pinStates[i].name === name) return pinStates[i].state.buzzer === 'active'
+			if (pinStates[i].name === name) return pinStates[i].state.buzzer.kind === 'active'
 		}
 		return false
 	}
@@ -263,7 +269,7 @@ const pinStates: pinconnector[] = [
 		pins.analogWritePin(_connector,0);
 		const name = getConnectorName(_connector);
 		for(let i = 0;i< pinStates.length;i++){
-			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'idle'
+			if (pinStates[i].name === name) pinStates[i].state.buzzer.kind = 'idle'
 		}
 		music.setBuiltInSpeakerEnabled(true);
 	}
@@ -273,26 +279,34 @@ const pinStates: pinconnector[] = [
 	//% _note.shadow="device_note"
 	//% group="Sound"
 	export function makeSound(_connector: connectorDigitalSensor, _note: number) {
+		const name = getConnectorName(_connector);
 		const periodus = 1000000 / _note;
 		pins.analogWritePin(_connector, 512);
 		pins.analogSetPeriod(_connector,periodus);
-		const name = getConnectorName(_connector);
 		for(let i = 0;i< pinStates.length;i++){
-			if (pinStates[i].name === name) pinStates[i].state.buzzer = 'active';
+			if (pinStates[i].name === name){
+				pinStates[i].state.buzzer = {kind:'active',periodus:periodus};
+			}
 		}
 	}
+
+let is_body_buzzer_play = false;
 
 	//% blockId=artec_stop_sound_both
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
 	export function stopSound_both(_connector: connectorDigitalSensor) {
-		pins.setAudioPin(_connector);
 		music.stopAllSounds();
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
 			if (pinStates[i].name === name) {
-				pinStates[i].state.buzzer = 'idle'
-				pinStates[i].state.body_buzzer = 'idle'
+				pinStates[i].state.buzzer.kind = 'idle'
+				is_body_buzzer_play = false;
+			}
+			const nowbuzzer = pinStates[i].state.buzzer;
+			if (pinStates[i].name !== name && nowbuzzer.kind === 'active') {
+				pins.analogWritePin(_connector, 512);
+				pins.analogSetPeriod(_connector,nowbuzzer.periodus);
 			}
 		}
 	}
@@ -302,13 +316,15 @@ const pinStates: pinconnector[] = [
 	//% _note.shadow="device_note"
 	//% group="Sound"
 	export function makeSound_both(_connector: connectorDigitalSensor, _note: number) {
-		pins.setAudioPin(_connector);
+		const periodus = 1000000 / _note;
+		pins.analogWritePin(_connector, 512);
+		pins.analogSetPeriod(_connector,periodus);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector)
 		for(let i = 0;i< pinStates.length;i++){
 			if (pinStates[i].name === name) {
-				pinStates[i].state.buzzer = 'active'
-				pinStates[i].state.body_buzzer = 'active'
+				pinStates[i].state.buzzer = {kind:'active',periodus:periodus}
+				is_body_buzzer_play = true;
 			}
 		}
 	}

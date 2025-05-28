@@ -66,7 +66,7 @@ enum connectorDigitalSensor {
 namespace artecrobo {
 	type DeviceState =
 		| { kind: 'idle' }
-		| { kind: 'active'; periodus: number;};
+		| { kind: 'active'; periodus: number; };
 
 	interface pinconnector {
 		name: string;
@@ -76,26 +76,13 @@ namespace artecrobo {
 		};
 	};
 
-const pinStates: pinconnector[] = [
-	{ name: 'P0', state: { led: {kind:'idle'}, buzzer: {kind:'idle'}}},
-	{ name: 'P1', state: { led: {kind:'idle'}, buzzer: {kind:'idle'}}},
-	{ name: 'P2', state: { led: {kind:'idle'}, buzzer: {kind:'idle'}}}
-];
-	type StateKey = keyof pinconnector['state'];
+	const pinStates: pinconnector[] = [
+		{ name: 'P0', state: { led: { kind: 'idle' }, buzzer: { kind: 'idle' } } },
+		{ name: 'P1', state: { led: { kind: 'idle' }, buzzer: { kind: 'idle' } } },
+		{ name: 'P2', state: { led: { kind: 'idle' }, buzzer: { kind: 'idle' } } }
+	];
+
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
-
-	function canUse(pin: string, prop: StateKey): boolean {
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === pin) return pinStates[i].state[prop].kind === 'idle'
-		}
-		return false
-	}
-
-	function setState(pin: string, prop: StateKey, state: DeviceState): void {
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === pin) pinStates[i].state[prop] = state
-		}
-	}
 
 	function getConnectorName(connector: AnyConnector): string {
 		switch (connector) {
@@ -129,7 +116,6 @@ const pinStates: pinconnector[] = [
 	export function photoReflector(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
-
 
 	//% blockId=artec_temperature_sensor
 	//% block="Temperature sensor pin %_connector"
@@ -211,9 +197,9 @@ const pinStates: pinconnector[] = [
 	//% group="LED"
 	export function isLEDLighting(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === name){
-				if(pinStates[i].state.led.kind === 'active'){
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				if (pinStates[i].state.led.kind === 'active') {
 					return true
 				}
 			}
@@ -226,9 +212,9 @@ const pinStates: pinconnector[] = [
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === name){
-				if(pinStates[i].state.led.kind === 'active') {
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				if (pinStates[i].state.led.kind === 'active') {
 					pins.digitalWritePin(_connector, 0);
 					pinStates[i].state.led.kind = 'idle'
 				}
@@ -242,9 +228,9 @@ const pinStates: pinconnector[] = [
 	export function ledLighting(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
-		for(let i = 0;i< pinStates.length;i++){
-			if(pinStates[i].name === name){
-				if(pinStates[i].state.led.kind === 'idle') {
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				if (pinStates[i].state.led.kind === 'idle') {
 					pinStates[i].state.led.kind = 'active'
 				}
 			}
@@ -256,7 +242,7 @@ const pinStates: pinconnector[] = [
 	//% group="Sound"
 	export function isSound(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
+		for (let i = 0; i < pinStates.length; i++) {
 			if (pinStates[i].name === name) return pinStates[i].state.buzzer.kind === 'active'
 		}
 		return false
@@ -266,9 +252,9 @@ const pinStates: pinconnector[] = [
 	//% block="Sound stop pin %_connector"
 	//% group="Sound"
 	export function stopSound(_connector: connectorDigitalSensor) {
-		pins.analogWritePin(_connector,0);
+		pins.analogWritePin(_connector, 0);
 		const name = getConnectorName(_connector);
-		for(let i = 0;i< pinStates.length;i++){
+		for (let i = 0; i < pinStates.length; i++) {
 			if (pinStates[i].name === name) pinStates[i].state.buzzer.kind = 'idle'
 		}
 		music.setBuiltInSpeakerEnabled(true);
@@ -282,15 +268,15 @@ const pinStates: pinconnector[] = [
 		const name = getConnectorName(_connector);
 		const periodus = 1000000 / _note;
 		pins.analogWritePin(_connector, 512);
-		pins.analogSetPeriod(_connector,periodus);
-		for(let i = 0;i< pinStates.length;i++){
-			if (pinStates[i].name === name){
-				pinStates[i].state.buzzer = {kind:'active',periodus:periodus};
+		pins.analogSetPeriod(_connector, periodus);
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				pinStates[i].state.buzzer = { kind: 'active', periodus: periodus };
 			}
 		}
 	}
 
-let is_body_buzzer_play = false;
+	let is_body_buzzer_play = false;
 
 	//% blockId=artec_stop_sound_both
 	//% block="Sound stop pin %_connector"
@@ -298,7 +284,7 @@ let is_body_buzzer_play = false;
 	export function stopSound_both(_connector: connectorDigitalSensor) {
 		music.stopAllSounds();
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
+		for (let i = 0; i < pinStates.length; i++) {
 			if (pinStates[i].name === name) {
 				pinStates[i].state.buzzer.kind = 'idle'
 				is_body_buzzer_play = false;
@@ -306,7 +292,7 @@ let is_body_buzzer_play = false;
 			const nowbuzzer = pinStates[i].state.buzzer;
 			if (pinStates[i].name !== name && nowbuzzer.kind === 'active') {
 				pins.analogWritePin(_connector, 512);
-				pins.analogSetPeriod(_connector,nowbuzzer.periodus);
+				pins.analogSetPeriod(_connector, nowbuzzer.periodus);
 			}
 		}
 	}
@@ -318,12 +304,12 @@ let is_body_buzzer_play = false;
 	export function makeSound_both(_connector: connectorDigitalSensor, _note: number) {
 		const periodus = 1000000 / _note;
 		pins.analogWritePin(_connector, 512);
-		pins.analogSetPeriod(_connector,periodus);
+		pins.analogSetPeriod(_connector, periodus);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector)
-		for(let i = 0;i< pinStates.length;i++){
+		for (let i = 0; i < pinStates.length; i++) {
 			if (pinStates[i].name === name) {
-				pinStates[i].state.buzzer = {kind:'active',periodus:periodus}
+				pinStates[i].state.buzzer = { kind: 'active', periodus: periodus }
 				is_body_buzzer_play = true;
 			}
 		}

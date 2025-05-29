@@ -99,6 +99,42 @@ namespace artecrobo {
 		{ name: 'P2', state: { led: { kind: 'idle' }, buzzer: { kind: 'idle' } } }
 	];
 
+	function set_led_state(name: string, kind:DeviceState): void{
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				pinStates[i].state.led = kind;
+			}
+		}
+	}
+
+	function set_buzzer_state(name: string, kind:DeviceState): void{
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				pinStates[i].state.buzzer = kind;
+			}
+		}
+	}
+
+
+	function ledStateIs(name: string, kind: string): boolean {
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				return pinStates[i].state.led.kind === kind
+			}
+		}
+		return false
+	}
+
+	function buzzerStateIs(name: string, kind: string): boolean {
+		for (let i = 0; i < pinStates.length; i++) {
+			if (pinStates[i].name === name) {
+				return pinStates[i].state.buzzer.kind === kind
+			}
+		}
+		return false
+	}
+
+
 	type AnyConnector = connectorDigitalSensor | connectorAnalogSensor;
 
 	function getConnectorName(connector: AnyConnector): string {
@@ -212,14 +248,7 @@ namespace artecrobo {
 	//% group="LED"
 	export function isLEDOn(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector)
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) {
-				if (pinStates[i].state.led.kind === 'active') {
-					return true
-				}
-			}
-		}
-		return false
+		return ledStateIs(name,'active');
 	}
 
 	//% blockId=artec_LED_off
@@ -227,13 +256,8 @@ namespace artecrobo {
 	//% group="LED"
 	export function ledOff(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) {
-				if (pinStates[i].state.led.kind === 'active') {
-					pins.digitalWritePin(_connector, 0);
-					pinStates[i].state.led.kind = 'idle'
-				}
-			}
+		if(ledStateIs(name,'active')){
+			set_led_state(name,{kind:'idle'});
 		}
 	}
 
@@ -243,12 +267,8 @@ namespace artecrobo {
 	export function ledOn(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) {
-				if (pinStates[i].state.led.kind === 'idle') {
-					pinStates[i].state.led.kind = 'active'
-				}
-			}
+		if (ledStateIs(name,'idle')) {
+			set_led_state(name,{kind: 'active', periodus: 0})
 		}
 	}
 
@@ -256,11 +276,8 @@ namespace artecrobo {
 	//% block="is Sound play pin %_connector"
 	//% group="Sound"
 	export function isBuzzing(_connector: connectorDigitalSensor): boolean {
-		const name = getConnectorName(_connector)
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) return pinStates[i].state.buzzer.kind === 'active'
-		}
-		return false
+		const name = getConnectorName(_connector);
+		return buzzerStateIs(name,'active');
 	}
 
 	//% blockId=artec_buzz_off
@@ -269,10 +286,7 @@ namespace artecrobo {
 	export function buzzOff(_connector: connectorDigitalSensor) {
 		pins.analogWritePin(_connector, 0);
 		const name = getConnectorName(_connector);
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) pinStates[i].state.buzzer.kind = 'idle'
-		}
-		music.setBuiltInSpeakerEnabled(true);
+		set_buzzer_state(name,{kind:'idle'})
 	}
 
 	//% blockId=artec_buzz_on
@@ -284,11 +298,7 @@ namespace artecrobo {
 		const periodus = 1000000 / _note;
 		pins.analogWritePin(_connector, 512);
 		pins.analogSetPeriod(_connector, periodus);
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) {
-				pinStates[i].state.buzzer = { kind: 'active', periodus: periodus };
-			}
-		}
+		set_buzzer_state(name,{ kind: 'active', periodus: periodus});
 	}
 
 	//% blockId=artec_buzz_off_both
@@ -296,18 +306,19 @@ namespace artecrobo {
 	//% group="Sound"
 	export function buzzOff_both(_connector: connectorDigitalSensor) {
 		music.stopAllSounds();
-		const name = getConnectorName(_connector)
+		const name = getConnectorName(_connector);
+		set_buzzer_state(name,{kind:'idle'});
+		is_body_buzzer_play = false;
 		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) {
-				pinStates[i].state.buzzer.kind = 'idle'
-				is_body_buzzer_play = false;
-			}
+			// 指定端子以外のブザーがonの時の処理
+			if(pinStates[i].name === name) continue;
+
 			const nowbuzzer = pinStates[i].state.buzzer;
-			if (pinStates[i].name !== name && nowbuzzer.kind === 'active') {
+			if (nowbuzzer.kind === 'active') {
 				pins.analogWritePin(_connector, 512);
 				pins.analogSetPeriod(_connector, nowbuzzer.periodus);
-			}
-		}
+			};
+		};
 	}
 
 	//% blockId=artec_buzz_on_both

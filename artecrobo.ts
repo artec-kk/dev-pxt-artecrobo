@@ -83,7 +83,7 @@ namespace artecrobo {
 
 	type DeviceState =
 		| { kind: 'idle' }
-		| { kind: 'active'; periodus: number; };
+		| { kind: 'active'; note: number; };
 
 	interface pinconnector {
 		name: string;
@@ -268,7 +268,7 @@ namespace artecrobo {
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
 		if (ledStateIs(name,'idle')) {
-			set_led_state(name,{kind: 'active', periodus: 0})
+			set_led_state(name,{kind: 'active', note: 0})
 		}
 	}
 
@@ -289,16 +289,20 @@ namespace artecrobo {
 		set_buzzer_state(name,{kind:'idle'})
 	}
 
+	function playBuzzer(_connector: connectorDigitalSensor,_note: number){
+		const periodus = 1000000 / _note;
+		pins.analogWritePin(_connector, 512);
+		pins.analogSetPeriod(_connector, periodus);
+	}
+
 	//% blockId=artec_buzz_on
 	//% block="buzzer on pin %_connector Hz %_note"
 	//% _note.shadow="device_note"
 	//% group="Sound"
 	export function buzzOn(_connector: connectorDigitalSensor, _note: number) {
 		const name = getConnectorName(_connector);
-		const periodus = 1000000 / _note;
-		pins.analogWritePin(_connector, 512);
-		pins.analogSetPeriod(_connector, periodus);
-		set_buzzer_state(name,{ kind: 'active', periodus: periodus});
+		playBuzzer(_connector,_note)
+		set_buzzer_state(name,{ kind: 'active', note: _note});
 	}
 
 	//% blockId=artec_buzz_off_both
@@ -314,10 +318,7 @@ namespace artecrobo {
 			if(pinStates[i].name === name) continue;
 
 			const nowbuzzer = pinStates[i].state.buzzer;
-			if (nowbuzzer.kind === 'active') {
-				pins.analogWritePin(_connector, 512);
-				pins.analogSetPeriod(_connector, nowbuzzer.periodus);
-			};
+			if (nowbuzzer.kind === 'active') playBuzzer(_connector, nowbuzzer.note);
 		};
 	}
 
@@ -326,17 +327,11 @@ namespace artecrobo {
 	//% _note.shadow="device_note"
 	//% group="Sound"
 	export function buzzOn_both(_connector: connectorDigitalSensor, _note: number) {
-		const periodus = 1000000 / _note;
-		pins.analogWritePin(_connector, 512);
-		pins.analogSetPeriod(_connector, periodus);
+		playBuzzer(_connector,_note);
 		music.ringTone(_note);
-		const name = getConnectorName(_connector)
-		for (let i = 0; i < pinStates.length; i++) {
-			if (pinStates[i].name === name) {
-				pinStates[i].state.buzzer = { kind: 'active', periodus: periodus }
-				is_body_buzzer_play = true;
-			}
-		}
+		const name = getConnectorName(_connector);
+		is_body_buzzer_play = true;
+		set_buzzer_state(name,{kind:'active',note:_note})
 	}
 
 	//% blockId=artec_move_servo_motor_max

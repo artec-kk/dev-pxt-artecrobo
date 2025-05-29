@@ -64,6 +64,23 @@ enum connectorDigitalSensor {
 //% color=#5b99a5 weight=100 icon="\uf009" block="ArtecRobo"
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
+
+	let is_body_buzzer_play = false;
+	let isUltrasonicBusy = false;
+
+	let angleP13 = 90;
+	let angleP14 = 90;
+	let angleP15 = 90;
+	pins.servoWritePin(AnalogPin.P13, angleP13);
+	pins.servoWritePin(AnalogPin.P14, angleP14);
+	pins.servoWritePin(AnalogPin.P15, angleP15);
+
+	/* spped initial value */
+	let speedM1 = 1023;
+	let speedM2 = 1023;
+	let state = DCmotion.Brake;
+
+
 	type DeviceState =
 		| { kind: 'idle' }
 		| { kind: 'active'; periodus: number; };
@@ -131,7 +148,6 @@ namespace artecrobo {
 		return pins.analogReadPin(_connector);
 	}
 
-	let isUltrasonicBusy = false
 
 	function getdist(_connector: connectorDigitalSensor): number {
 		pins.digitalWritePin(_connector, 0);
@@ -160,7 +176,6 @@ namespace artecrobo {
 		isUltrasonicBusy = false
 		return dist
 	}
-
 
 	//% blockId=artec_is_touch_sensor_pressed
 	//% block="is touch sensor pressed pin %_connector"
@@ -276,8 +291,6 @@ namespace artecrobo {
 		}
 	}
 
-	let is_body_buzzer_play = false;
-
 	//% blockId=artec_buzz_off_both
 	//% block="buzzer off both pin %_connector"
 	//% group="Sound"
@@ -314,16 +327,6 @@ namespace artecrobo {
 			}
 		}
 	}
-
-
-
-	let angleP13 = 90;
-	let angleP14 = 90;
-	let angleP15 = 90;
-	pins.servoWritePin(AnalogPin.P13, angleP13);
-	pins.servoWritePin(AnalogPin.P14, angleP14);
-	pins.servoWritePin(AnalogPin.P15, angleP15);
-
 
 	//% blockId=artec_move_servo_motor_max
 	//% block="move servo pin %_connector| to (degrees) %_angle"
@@ -485,11 +488,6 @@ namespace artecrobo {
 		if (diffP14 != 0) pins.servoWritePin(AnalogPin.P14, angleP14);
 		if (diffP15 != 0) pins.servoWritePin(AnalogPin.P15, angleP15);
 	}
-
-	/* spped initial value */
-	let speedM1 = 1023;
-	let speedM2 = 1023;
-	let state = DCmotion.Brake;
 
 	//% blockId=artec_set_speed_dc_motor
 	//% block="DC motor %_connector| speed: %_speed"

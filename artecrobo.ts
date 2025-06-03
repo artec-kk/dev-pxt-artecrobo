@@ -338,8 +338,8 @@ namespace artecrobo {
 	//% _note.shadow="device_note"
 	//% group="Sound"
 	export function turnOnSpeakerAndBuzzer(_connector: connectorDigitalSensor, _note: number) {
-		playBuzzer(_connector, _note);
 		music.ringTone(_note);
+		playBuzzer(_connector, _note);
 		const name = getConnectorName(_connector);
 		is_body_buzzer_play = true;
 		set_buzzer_state(name, { kind: 'active', note: _note })

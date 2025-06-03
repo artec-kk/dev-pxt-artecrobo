@@ -320,7 +320,7 @@ namespace artecrobo {
 			if (pinStates[i].name === name) continue;
 
 			const nowbuzzer = pinStates[i].state.buzzer;
-			if (nowbuzzer.kind === 'active') playBuzzer(_connector, nowbuzzer.note);
+			if (nowbuzzer.kind === 'active') playBuzzer(connectorDigitalSensor[pinStates[i].name as keyof typeof connectorDigitalSensor], nowbuzzer.note);
 		};
 	}
 

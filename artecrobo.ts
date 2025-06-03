@@ -65,6 +65,8 @@ enum connectorDigitalSensor {
 //% groups="['Motor', 'Sensor', 'LED', 'Sound']"
 namespace artecrobo {
 
+	// ToDo 変数名を変更する
+
 	let is_body_buzzer_play = false;
 	let isUltrasonicBusy = false;
 
@@ -166,7 +168,7 @@ namespace artecrobo {
 	//% blockId=artec_photo_reflector
 	//% block="ir photoreflector %_connector"
 	//% group="Sensor"
-	export function photoReflector(_connector: connectorAnalogSensor): number {
+	export function irPhotoreflector(_connector: connectorAnalogSensor): number {
 		return pins.analogReadPin(_connector);
 	}
 
@@ -216,7 +218,7 @@ namespace artecrobo {
 	//% blockId=artec_is_touch_sensor_pressed
 	//% block="touch sensor %_connector pressed"
 	//% group="Sensor"
-	export function isTouchsensorPressed(_connector: connectorTouchSensor): boolean {
+	export function isTouchSensorPressed(_connector: connectorTouchSensor): boolean {
 		switch (_connector) {
 			case connectorTouchSensor.A:
 				if (pins.digitalReadPin(DigitalPin.P5) == 0) return true;
@@ -254,7 +256,7 @@ namespace artecrobo {
 	//% blockId=artec_LED_off
 	//% block="LED %_connector off"
 	//% group="LED"
-	export function ledOff(_connector: connectorDigitalSensor) {
+	export function turnOffLED(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		if (ledStateIs(name, 'active')) {
 			set_led_state(name, { kind: 'idle' });
@@ -264,7 +266,7 @@ namespace artecrobo {
 	//% blockId=artec_LED_on
 	//% block="LED %_connector on"
 	//% group="LED"
-	export function ledOn(_connector: connectorDigitalSensor) {
+	export function turnOnLED(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		pins.digitalWritePin(_connector, 1);
 		if (ledStateIs(name, 'idle')) {
@@ -272,18 +274,18 @@ namespace artecrobo {
 		}
 	}
 
-	//% blockId=artec_isBuzzing
+	//% blockId=artec_buzzer_playing
 	//% block="buzzer %_connector playing"
 	//% group="Sound"
-	export function isBuzzing(_connector: connectorDigitalSensor): boolean {
+	export function isBuzzerplaying(_connector: connectorDigitalSensor): boolean {
 		const name = getConnectorName(_connector);
 		return buzzerStateIs(name, 'active');
 	}
 
-	//% blockId=artec_buzz_off
-	//% block="buzzer %_connector" off
+	//% blockId=artec_buzzer_off
+	//% block="buzzer %_connector off"
 	//% group="Sound"
-	export function buzzOff(_connector: connectorDigitalSensor) {
+	export function turnOffBuzzer(_connector: connectorDigitalSensor) {
 		pins.analogWritePin(_connector, 0);
 		const name = getConnectorName(_connector);
 		set_buzzer_state(name, { kind: 'idle' })
@@ -299,7 +301,7 @@ namespace artecrobo {
 	//% block="buzzer %_connector on frequency %_note"
 	//% _note.shadow="device_note"
 	//% group="Sound"
-	export function buzzOn(_connector: connectorDigitalSensor, _note: number) {
+	export function turnOnBuzzer(_connector: connectorDigitalSensor, _note: number) {
 		const name = getConnectorName(_connector);
 		playBuzzer(_connector, _note)
 		set_buzzer_state(name, { kind: 'active', note: _note });
@@ -308,7 +310,7 @@ namespace artecrobo {
 	//% blockId=artec_buzz_off_both
 	//% block="speaker and buzzer %_connector off"
 	//% group="Sound"
-	export function buzzOff_both(_connector: connectorDigitalSensor) {
+	export function turnOffSpeakerAndBuzzer(_connector: connectorDigitalSensor) {
 		music.stopAllSounds();
 		const name = getConnectorName(_connector);
 		set_buzzer_state(name, { kind: 'idle' });
@@ -326,7 +328,7 @@ namespace artecrobo {
 	//% block="speaker and buzzer %_connector on frequency %_note"
 	//% _note.shadow="device_note"
 	//% group="Sound"
-	export function buzzOn_both(_connector: connectorDigitalSensor, _note: number) {
+	export function turnOnSpeakerAndBuzzer(_connector: connectorDigitalSensor, _note: number) {
 		playBuzzer(_connector, _note);
 		music.ringTone(_note);
 		const name = getConnectorName(_connector);

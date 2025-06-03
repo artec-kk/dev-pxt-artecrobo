@@ -151,6 +151,12 @@ namespace artecrobo {
 		}
 	}
 
+	const connectorNameToEnum: { [key: string]: connectorDigitalSensor } = {
+    "P0": connectorDigitalSensor.P0,
+    "P1": connectorDigitalSensor.P1,
+    "P2": connectorDigitalSensor.P2
+	};
+
 	//% blockId=artec_light_sensor
 	//% block="light sensor %_connector"
 	//% group="Sensor"
@@ -320,7 +326,10 @@ namespace artecrobo {
 			if (pinStates[i].name === name) continue;
 
 			const nowbuzzer = pinStates[i].state.buzzer;
-			if (nowbuzzer.kind === 'active') playBuzzer(connectorDigitalSensor[pinStates[i].name as keyof typeof connectorDigitalSensor], nowbuzzer.note);
+			if (nowbuzzer.kind === 'active'){
+				const pinEnum = connectorNameToEnum[pinStates[i].name];
+				playBuzzer(pinEnum, nowbuzzer.note);
+			} 
 		};
 	}
 

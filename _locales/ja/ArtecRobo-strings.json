@@ -15,7 +15,7 @@
   ,"artecrobo.AsyncMoveServoMotor|block": "サーボモーターを同時に動かす| 速さ: %_speed| P13の角度: %_angle13| P14の角度: %_angle14| P15の角度: %_angle15"
   ,"artecrobo.lightSensor|block": "光センサー|  %_connector"
   ,"artecrobo.soundSensor|block": "音センサー|  %_connector"
-  ,"artecrobo.photoReflector|block": "赤外線フォトリフレクタ|  %_connector"
+  ,"artecrobo.irPhotoreflector|block": "赤外線フォトリフレクタ|  %_connector"
   ,"artecrobo.turnOnLED|block": "LED 点灯 | %_connector"
   ,"artecrobo.turnOffLED|block": "LED 消灯 | %_connector"
   ,"artecrobo.turnOnBuzzer|block": "ブザー|  %_connector から音を鳴らす| 音の高さ: %_note"

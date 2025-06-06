@@ -3,51 +3,202 @@
 
 [Extension for ArtecRobo](https://www.artec-kk.co.jp/en/images/056720.pdf#page=36)
 
-## Basic usage
+## Basic Usage
 
-* Set the speed of DC motor
+* Run a command when you press a Touch Sensor
 
-The way to set DC motor power is by using the setSpeedDCMotor blocks. With each of these blocks you specify M1 or M2, and a speed from 0 to 1023. 
+Use this to run an event when you press a Touch Sensor. You can specify A or B.
+
+```blocks
+// Show a heart icon when you press the Touch Sensor:
+artecrobo.onTouchSensorPressed(connectorTouchSensor.A, function () {
+    basic.showIcon(IconNames.Heart)
+})
+```
+
+* Check if a Touch Sensor is pressed
+
+Use this to check if the Touch Sensor is pressed. You can specify A or B.
+
+```blocks
+// Press the Touch Sensor to show a heart icon:
+if (artecrobo.isTouchsensorPressed(connectorTouchSensor.A)) {
+    basic.showIcon(IconNames.Heart)
+}
+```
+
+* Detect an object’s distance from an Ultrasonic Sensor
+
+Use this to get the value of an Ultrasonic Sensor. You can specify P0, P1, or P2.
+
+```blocks
+// Get the distance of an object to an Ultrasonic Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.ultraSonicSensor(connectorDigitalSensor.P0)))
+```
+
+* Get the value of a Water Level Sensor
+
+Use this to get the value of a Water Level Sensor. You can specify P0, P1, or P2.
+
+```blocks
+// Get the value of a Water Level on P0 through serial:
+serial.writeLine("" + (artecrobo.waterlevelSensor(connectorAnalogSensor.P0)))
+```
+
+* Get the value of a Temperature Sensor
+
+Use this to get the value of a Temperature Sensor. You can specify P0, P1, or P2.
+
+```blocks
+// Get the value of a Temperature Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.temperatureSensor(connectorAnalogSensor.P0)))
+```
+
+* Get the value of an IR Photoreflector
+
+Use this to get the value of an IR Photoreflector. You can specify P0, P1, or P2.
+
+```blocks
+// Get the value of a IR Photoreflector on P0 through serial:
+serial.writeLine("" + (artecrobo.photoReflector(connectorAnalogSensor.P0)))
+```
+
+* Get the value of a Sound Sensor
+
+Use this to get the value of a Sound Sensor. You can specify P0, P1, or P2.
+
+```blocks
+// Get the value of a Sound Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.soundSensor(connectorAnalogSensor.P0)))
+```
+
+* Get the value of a Light Sensor
+
+Use this to get the value of a Light Sensor. You can specify P0, P1, or P2.
+
+```blocks
+// Get the value of a Light Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.lightSensor(connectorAnalogSensor.P0)))
+```
+
+* Turn on an LED
+
+Use this to turn on the LED. You can specify P0, P1, or P2.
+
+```blocks
+// Turn on an LED on P0:
+artecrobo.ledOn(connectorDigitalSensor.P0)
+```
+
+* Turn on an LED
+
+Use this to turn off the LED. You can specify P0, P1, or P2.
+
+```blocks
+// Turn off an LED on P0:
+artecrobo.ledOff(connectorDigitalSensor.P0)
+```
+
+* Check whether an LED is on
+
+Use this to check whether an LED is on. You can specify P0, P1, or P2.
+
+```blocks
+// Run a command when an LED on P0 is on:
+if (artecrobo.isLEDOn(connectorDigitalSensor.P0)) {
+}
+```
+
+* Use the micro:bit and ArtecRobo Buzzer to play a sound at the set frequency:
+
+Use this to play a set note on the micro:bit and an ArtecRobo Buzzer. You can specify P0, P1, or P2 as well as the note using the frequency.
+
+```blocks
+// Play a sound at 262 Hz using the micro:bit and a Buzzer on P0:
+artecrobo.buzzOn_both(connectorDigitalSensor.P0, 262)
+```
+
+* Stop playing the micro:bit and an ArtecRobo Buzzer
+
+Use this to stop the micro:bit and ArtecRobo Buzzer. You can specify P0, P1, or P2.
+
+```blocks
+// Stop playing the micro:bit and a Buzzer on P0:
+artecrobo.buzzOff_both(connectorDigitalSensor.P0)
+```
+
+* Use an ArtecRobo Buzzer to play a sound at the set frequency
+
+Use this to play a note on an ArtecRobo Buzzer. You can specify P0, P1, or P2.
+
+```blocks
+// Play a sound at 262 Hz using a Buzzer on P0:
+artecrobo.buzzOn(connectorDigitalSensor.P0, 262)
+```
+
+* Stop playing an ArtecRobo Buzzer
+
+Use this to stop an ArtecRobo Buzzer. You can specify P0, P1, or P2.
+
+```blocks
+// Stop playing a Buzzer on P0:
+artecrobo.buzzOff(connectorDigitalSensor.P0)
+```
+
+* Check if an ArtecRobo Buzzer is playing
+
+Use this to check whether an ArtecRobo Buzzer is playing. You can specify P0, P1, or P2.
+
+```blocks
+// Show a heart icon if a Buzzer on P0 is playing:
+if (artecrobo.isBuzzing(connectorDigitalSensor.P0)) {
+    basic.showIcon(IconNames.Heart)
+}
+```
+
+* Set the speed of a DC Motor
+
+Use this to set the speed of a DC Motor. You can specify M1 or M2 and a speed from 0 to 1023. 
 
 ```blocks
 // Set M1 Dcmotor to max power(1023)
 artecrobo.setSpeedDCMotor(connectorDCMotor.M1, 1023)
 ```
 
-* Set the direction of DC motor
+* Set the direction of a DC Motor
 
-The way to move DC motor is by using the moveDCMotor blocks. With each of these blocks you specify M1 or M2, and a Forward, Backward, Brake or Coast.
+Use this to move a DC Motor in a set direction. You can specify M1 or M2 and a direction of Forward, Backward, Brake or Coast.
 
 ```blocks
 // Control M1 DC motor to Forward
 artecrobo.moveDCMotor(connectorDCMotor.M1, DCmotion.Forward)
 ```
 
-* Set the servo
+* Set a Servomotor angle
 
-The way to move Servomotor is by using the moveServoMotorMax blocks. With each of these blocks you specify P13, P14 or P15, and an angle from 0 to 180.
+Use this to move a Servomotor to a set angle. You can specify P13, P14 or P15 and an angle from 0 to 180.
 
 ```blocks
-// Set P13 servomotor to 90 degree
+// Set a Servomotor on P13 to 90 degrees
 artecrobo.moveServoMotorMax(connectorServoMotor.P13, 90)
 ```
 
-* Set the servo with speed
+* Set a Servomotor angle at a set speed
 
-The way to move Servomotor at a specified speed is by using the moveServoMotor blocks. With each of these blocks you specify P13, P14 or P15, an angle from 0 to 180, a speed from 1 to 20.
+Use this to move a Servomotor at a set speed. You can specify P13, P14 or P15, an angle from 0 to 180, and a speed from 1 to 20.
 
 ```blocks
-// Set P13 servomotor to 90 degree at speed 20
+// Set a Servomotor on P13 to 90 degrees at speed 20:
 artecrobo.moveServoMotor(connectorServoMotor.P13, 90, 20)
 ```
 
-* Set the servos 
+* Set multiple Servomotor angles at a set speed 
 
-The way to move Servomotors at a specified speed is by using the AsyncMoveServoMotor blocks. With each of these blocks you specify a speed from 0 to 20 and an angle from 0 to 180 with P13, P14, or P15.
+Use this to move multiple Servomotors at a set speed. You can specify P13, P14 or P15, an angle from 0 to 180, and a speed from 1 to 20.
 
 
 ```blocks
-// Set P13, P14, and P15 servomotors to 0, 90, 180 degree at speed 20
+// Set Servomotors on P13, P14, and P15 to 0, 90, and 180 degrees at speed 20:
 artecrobo.AsyncMoveServoMotor(20, 0, 90, 180)
 ```
 

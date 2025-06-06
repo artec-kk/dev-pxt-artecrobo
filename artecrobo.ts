@@ -68,7 +68,7 @@ namespace artecrobo {
 	// ToDo 変数名を変更する
 
 	let is_body_buzzer_play = false;
-	let isUltrasonicBusy = false;
+	const ultrasonicBusyMap: { [pin: number]: boolean } = {}
 
 	let angleP13 = 90;
 	let angleP14 = 90;
@@ -210,14 +210,19 @@ namespace artecrobo {
 	//% block="ultrasonic sensor %_connector"
 	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
-		while (isUltrasonicBusy) {
+		const pinId = _connector as number;
+
+		while (ultrasonicBusyMap[pinId]) {
 			basic.pause(5)
 		}
-		isUltrasonicBusy = true
+		ultrasonicBusyMap[pinId] = true
 
-		const dist = getdist(_connector)
+		const delay = Math.floor(Math.random() * 11) + 5; // 5〜15ms
+		basic.pause(delay);
 
-		isUltrasonicBusy = false
+		const dist = getdist(_connector);
+
+		ultrasonicBusyMap[pinId] = false;
 		return dist
 	}
 

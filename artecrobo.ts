@@ -211,7 +211,7 @@ namespace artecrobo {
 	//% group="Sensor"
 	export function ultraSonicSensor(_connector: connectorDigitalSensor): number {
 		while (isUltrasonicBusy) {
-			basic.pause(5)
+			control.waitMicros(1000)
 		}
 		isUltrasonicBusy = true
 

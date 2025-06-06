@@ -22,7 +22,7 @@ Use this to check if the Touch Sensor is pressed. You can specify A or B.
 
 ```blocks
 // Press the Touch Sensor to show a heart icon:
-if (artecrobo.isTouchsensorPressed(connectorTouchSensor.A)) {
+if (artecrobo.isTouchSensorPressed(connectorTouchSensor.A)) {
     basic.showIcon(IconNames.Heart)
 }
 ```
@@ -60,7 +60,7 @@ Use this to get the value of an IR Photoreflector. You can specify P0, P1, or P2
 
 ```blocks
 // Get the value of a IR Photoreflector on P0 through serial:
-serial.writeLine("" + (artecrobo.photoReflector(connectorAnalogSensor.P0)))
+serial.writeLine("" + (artecrobo.irPhotoreflector(connectorAnalogSensor.P0)))
 ```
 
 * Get the value of a Sound Sensor
@@ -87,7 +87,7 @@ Use this to turn on the LED. You can specify P0, P1, or P2.
 
 ```blocks
 // Turn on an LED on P0:
-artecrobo.ledOn(connectorDigitalSensor.P0)
+artecrobo.turnOnLED(connectorDigitalSensor.P0)
 ```
 
 * Turn on an LED
@@ -96,7 +96,7 @@ Use this to turn off the LED. You can specify P0, P1, or P2.
 
 ```blocks
 // Turn off an LED on P0:
-artecrobo.ledOff(connectorDigitalSensor.P0)
+artecrobo.turnOffLED(connectorDigitalSensor.P0)
 ```
 
 * Check whether an LED is on
@@ -115,7 +115,7 @@ Use this to play a set note on the micro:bit and an ArtecRobo Buzzer. You can sp
 
 ```blocks
 // Play a sound at 262 Hz using the micro:bit and a Buzzer on P0:
-artecrobo.buzzOn_both(connectorDigitalSensor.P0, 262)
+artecrobo.turnOnSpeakerAndBuzzer(connectorDigitalSensor.P0, 262)
 ```
 
 * Stop playing the micro:bit and an ArtecRobo Buzzer
@@ -124,7 +124,7 @@ Use this to stop the micro:bit and ArtecRobo Buzzer. You can specify P0, P1, or 
 
 ```blocks
 // Stop playing the micro:bit and a Buzzer on P0:
-artecrobo.buzzOff_both(connectorDigitalSensor.P0)
+artecrobo.turnOffSpeakerAndBuzzer(connectorDigitalSensor.P0)
 ```
 
 * Use an ArtecRobo Buzzer to play a sound at the set frequency
@@ -133,7 +133,7 @@ Use this to play a note on an ArtecRobo Buzzer. You can specify P0, P1, or P2.
 
 ```blocks
 // Play a sound at 262 Hz using a Buzzer on P0:
-artecrobo.buzzOn(connectorDigitalSensor.P0, 262)
+artecrobo.turnOnBuzzer(connectorDigitalSensor.P0, 262)
 ```
 
 * Stop playing an ArtecRobo Buzzer
@@ -142,7 +142,7 @@ Use this to stop an ArtecRobo Buzzer. You can specify P0, P1, or P2.
 
 ```blocks
 // Stop playing a Buzzer on P0:
-artecrobo.buzzOff(connectorDigitalSensor.P0)
+artecrobo.turnOffBuzzer(connectorDigitalSensor.P0)
 ```
 
 * Check if an ArtecRobo Buzzer is playing
@@ -151,7 +151,7 @@ Use this to check whether an ArtecRobo Buzzer is playing. You can specify P0, P1
 
 ```blocks
 // Show a heart icon if a Buzzer on P0 is playing:
-if (artecrobo.isBuzzing(connectorDigitalSensor.P0)) {
+if (artecrobo.isBuzzerplaying(connectorDigitalSensor.P0)) {
     basic.showIcon(IconNames.Heart)
 }
 ```

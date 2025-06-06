@@ -1,3 +1,75 @@
+// on touch sensor [pin] pressed
+// Show a heart icon when you press the Touch Sensor:
+artecrobo.onTouchSensorPressed(connectorTouchSensor.A, function () {
+    basic.showIcon(IconNames.Heart);
+});
+
+// touch sensor [pin] pressed
+// Press the Touch Sensor to show a heart icon:
+if (artecrobo.isTouchSensorPressed(connectorTouchSensor.A)) {
+    basic.showIcon(IconNames.Heart);
+};
+
+// ultrasonic sensor [pin] distance
+// Get the distance of an object to an Ultrasonic Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.ultraSonicSensor(connectorDigitalSensor.P0)));
+
+// water level sensor [pin]
+// Get the value of a Water Level on P0 through serial:
+serial.writeLine("" + (artecrobo.waterlevelSensor(connectorAnalogSensor.P0)));
+
+// temperature sensor [pin]
+// Get the value of a Temperature Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.temperatureSensor(connectorAnalogSensor.P0)));
+
+// ir photoreflector [pin]
+// Get the value of a IR Photoreflector on P0 through serial:
+serial.writeLine("" + (artecrobo.irPhotoreflector(connectorAnalogSensor.P0)));
+
+// sound sensor [pin]
+// Get the value of a Sound Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.soundSensor(connectorAnalogSensor.P0)));
+
+// light sensor [pin]
+// Get the value of a Light Sensor on P0 through serial:
+serial.writeLine("" + (artecrobo.lightSensor(connectorAnalogSensor.P0)));
+
+// LED [pin] on
+// Turn on an LED on P0:
+artecrobo.turnOnLED(connectorDigitalSensor.P0);
+
+// LED [pin] off
+// Turn off an LED on P0:
+artecrobo.turnOffLED(connectorDigitalSensor.P0);
+
+// LED [pin] is on
+// Run a command when an LED on P0 is on:
+if (artecrobo.isLEDOn(connectorDigitalSensor.P0)) {
+};
+
+// speaker and buzzer [pin] on frequency [frequency]
+// Play a sound at 262 Hz using the micro:bit and a Buzzer on P0:
+artecrobo.turnOnSpeakerAndBuzzer(connectorDigitalSensor.P0, 262);
+
+// speaker and buzzer [pin] off
+// Stop playing the micro:bit and a Buzzer on P0:
+artecrobo.turnOffSpeakerAndBuzzer(connectorDigitalSensor.P0);
+
+// buzzer [pin] on frequency [frequency]
+// Play a sound at 262 Hz using a Buzzer on P0:
+artecrobo.turnOnBuzzer(connectorDigitalSensor.P0, 262);
+
+// buzzer [pin] off
+// Stop playing a Buzzer on P0:
+artecrobo.turnOffBuzzer(connectorDigitalSensor.P0);
+
+// buzzer [pin] playing
+// Show a heart icon if a Buzzer on P0 is playing:
+if (artecrobo.isBuzzerplaying(connectorDigitalSensor.P0)) {
+    basic.showIcon(IconNames.Heart);
+};
+
+
 // DC Motor
 // Power & CW
 // M1, M2

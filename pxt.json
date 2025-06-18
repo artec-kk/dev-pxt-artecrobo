@@ -10,7 +10,9 @@
         "_locales/ja/ArtecRobo-jsdoc-strings.json",
         "_locales/ja/ArtecRobo-strings.json",
         "_locales/zh-TW/ArtecRobo-jsdoc-strings.json",
-        "_locales/zh-TW/ArtecRobo-strings.json"
+        "_locales/zh-TW/ArtecRobo-strings.json",
+        "_locales/zh-CN/ArtecRobo-jsdoc-strings.json",
+        "_locales/zh-CN/ArtecRobo-strings.json"
     ],
     "testFiles": [
         "test.ts"

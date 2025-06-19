@@ -2,7 +2,7 @@
   "DCmotion.Forward|block": "顺时钟转"
   ,"DCmotion.Backward|block": "逆时钟转"
   ,"DCmotion.Brake|block": "停止"
-  ,"DCmotion.Coast|block": "解放"
+  ,"DCmotion.Coast|block": "释放"
   ,"connectorDCMotor.M1|block": "M1"
   ,"connectorDCMotor.M2|block": "M2"
   ,"connectorServoMotor.P13|block": "P13"

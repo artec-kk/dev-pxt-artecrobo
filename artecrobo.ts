@@ -428,7 +428,7 @@ namespace artecrobo {
 	 */
 	//% weight=84
 	//% blockId=artec_async_move_servo_motor
-	//% block="move servo synchronously | speed: %_speed| P13 (degrees): %_angle13| P14 (degrees): %_angle14|P15 (degrees): %_angle15"
+	//% block="move servo synchronously | speed: %_speed| P13 (degrees): %_angle13| P14 (degrees): %_angle14| P15 (degrees): %_angle15"
 	//% group="Motor"
 	//% _speed.min=1 _speed.max=20
 	//% _angle13.min=0 _angle13.max=180

@@ -270,6 +270,7 @@ namespace artecrobo {
 	export function turnOffLED(_connector: connectorDigitalSensor) {
 		const name = getConnectorName(_connector)
 		if (ledStateIs(name, 'active')) {
+			pins.digitalWritePin(_connector, 0);
 			set_led_state(name, { kind: 'idle' });
 		}
 	}
